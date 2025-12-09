@@ -17,6 +17,25 @@ Always **explain Framer Motion code** when used:
 ### 3. Project Adherence
 Build strictly according to the [Real Estate CRM - Product Specification.md](./Real%20Estate%20CRM%20-%20Product%20Specification.md)
 
+### 4. Learning-First Approach
+This project is a **learning exercise** for React and Next.js. Follow this methodology:
+
+**Student proposes first**:
+- Share your approach/solution to each problem before implementation
+- Attempt to solve problems independently first
+
+**Guide, don't solve**:
+- Point out flaws, anti-patterns, or issues in your proposed approach
+- Ask leading questions to help you discover better solutions
+- Explain *why* something is problematic, not just *what* is wrong
+
+**Provide answer after discussion**:
+- Full solutions given after you've attempted and learned from mistakes
+- Reasoning behind correct approaches explained
+- References to React/Next.js best practices and documentation provided
+
+**Goal**: Build the entire Real Estate CRM project through this teaching methodology
+
 ---
 
 ## Project Summary (5 Points)
