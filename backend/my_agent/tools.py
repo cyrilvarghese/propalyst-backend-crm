@@ -49,11 +49,16 @@ def search_listings(filters):
                 if passes_all:
                     filtered_results.append(listing)
             
-            print(f"🔍 Supabase query returned {len(filtered_results)} results")
+            # Log results with visual separation
+            print("\n" + "="*80)
+            print(f"🔍 SUPABASE QUERY RESULTS: {len(filtered_results)} listings found")
+            print("="*80 + "\n")
             
             # Limit results to prevent overwhelming the agent
             if len(filtered_results) > 50:
-                print(f"⚠️  Too many results ({len(filtered_results)}), limiting to 50")
+                print("\n" + "⚠️ "*40)
+                print(f"   WARNING: Too many results ({len(filtered_results)}), limiting to 50")
+                print("⚠️ "*40 + "\n")
                 filtered_results = filtered_results[:50]
             
             return filtered_results
