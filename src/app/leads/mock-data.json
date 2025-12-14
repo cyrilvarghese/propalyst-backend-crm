@@ -1,0 +1,737 @@
+[
+  {
+    "id": "472d44e1-0749-4776-895e-80c4f3a1a487",
+    "query": "3BHK villa in indiranagar, budget 5 crores, area up to 3000 sq.ft., possession in 6 months",
+    "extracted_criteria": {
+      "property": {
+        "bhk": 3,
+        "budget_min": null,
+        "budget_max": 5,
+        "area_sqft_min": null,
+        "area_sqft_max": 3000,
+        "property_type": "villa",
+        "property_age": null,
+        "location": "Indiranagar",
+        "req_type": "demand_buy",
+        "locations": [
+          "Indiranagar"
+        ],
+        "plot_size_min": null,
+        "plot_size_max": null,
+        "built_up_area_min": null,
+        "built_up_area_max": null,
+        "property_status": null,
+        "furnishing_status": null,
+        "special_features": []
+      },
+      "proximity": {
+        "near_school": false,
+        "near_airport": false,
+        "near_hospital": false,
+        "near_shopping_mall": false
+      },
+      "user_journey": {
+        "possession_timeline": "6 months",
+        "time_in_market": null,
+        "agents_contacted": null,
+        "work_locations": []
+      }
+    },
+    "missing_criteria": [
+      "property_age",
+      "proximity_preferences",
+      "time_in_market",
+      "agents_contacted"
+    ],
+    "matched_properties": [
+      {
+        "id": "prop-1",
+        "source_message_id": null,
+        "message_date": "2025-12-08T16:10:51+00:00",
+        "agent_contact": "+91-7847 83 83 83",
+        "agent_name": "Naresh S",
+        "company_name": null,
+        "raw_message": "3BHK Premium Apartment - Divyasree Life",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 2800,
+        "bedroom_count": 3,
+        "price": 59000000,
+        "price_text": "5.9Cr",
+        "location": "Indiranagar",
+        "project_name": "Divyasree Life",
+        "furnishing_status": "semi_furnished",
+        "parking_count": 2,
+        "parking_text": null,
+        "facing_direction": null,
+        "special_features": [
+          "gated_community",
+          "high_floor"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-12-12T06:14:56.846961+00:00",
+        "sender_name": "Naresh S"
+      },
+      {
+        "id": "prop-2",
+        "source_message_id": null,
+        "message_date": "2025-12-04T13:44:00+00:00",
+        "agent_contact": "+91 99869 97461",
+        "agent_name": "Vikram",
+        "company_name": null,
+        "raw_message": "3BHK Flat in Defence Colony - Semi Furnished",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 2100,
+        "bedroom_count": 3,
+        "price": 35000000,
+        "price_text": "3.5 Cr",
+        "location": "Indiranagar",
+        "project_name": null,
+        "furnishing_status": "semi_furnished",
+        "parking_count": 1,
+        "parking_text": null,
+        "facing_direction": "west",
+        "special_features": [
+          "modular_kitchen",
+          "lift"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-12-10T16:03:15.176004+00:00",
+        "sender_name": "Vikram"
+      },
+      {
+        "id": "prop-3",
+        "source_message_id": null,
+        "message_date": "2025-12-01T10:30:00+00:00",
+        "agent_contact": "+91-7847 83 83 83",
+        "agent_name": "ZEESHAN.G",
+        "company_name": "DZire Realtors",
+        "raw_message": "3BHK Apartment - Indiranagar 2nd Stage",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 1900,
+        "bedroom_count": 3,
+        "price": 37500000,
+        "price_text": "3.75 Cr",
+        "location": "Indiranagar",
+        "project_name": null,
+        "furnishing_status": "semi_furnished",
+        "parking_count": 1,
+        "parking_text": null,
+        "facing_direction": null,
+        "special_features": [
+          "brandnew"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-28T11:18:09.869202+00:00",
+        "sender_name": "Dzire-Realtors"
+      },
+      {
+        "id": "prop-4",
+        "source_message_id": null,
+        "message_date": "2025-11-25T14:15:00+00:00",
+        "agent_contact": "8105213550",
+        "agent_name": "Abhishek",
+        "company_name": "Golden Nest Realtors",
+        "raw_message": "3BHK Independent House - Defence Colony",
+        "message_type": "supply_sale",
+        "property_type": "independent_house",
+        "area_sqft": 3500,
+        "bedroom_count": 3,
+        "price": 29000000,
+        "price_text": "2.9 Cr",
+        "location": "Indiranagar",
+        "project_name": null,
+        "furnishing_status": null,
+        "parking_count": 2,
+        "parking_text": null,
+        "facing_direction": "east",
+        "special_features": [
+          "independent_house"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-28T10:18:34.037060+00:00",
+        "sender_name": "Abhishek"
+      },
+      {
+        "id": "prop-5",
+        "source_message_id": null,
+        "message_date": "2025-11-20T09:00:00+00:00",
+        "agent_contact": "9591292090",
+        "agent_name": "Raj Kumar",
+        "company_name": null,
+        "raw_message": "3.5BHK Penthouse - Indiranagar 1st Stage",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 3000,
+        "bedroom_count": 3,
+        "price": 22500000,
+        "price_text": "2.25 Cr",
+        "location": "Indiranagar",
+        "project_name": null,
+        "furnishing_status": "semi_furnished",
+        "parking_count": 2,
+        "parking_text": null,
+        "facing_direction": null,
+        "special_features": [
+          "penthouse",
+          "terrace"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-12-04T17:19:00.117276+00:00",
+        "sender_name": "Raj Kumar"
+      },
+      {
+        "id": "prop-6",
+        "source_message_id": null,
+        "message_date": "2025-11-18T11:30:00+00:00",
+        "agent_contact": "+91-9876543210",
+        "agent_name": "Priya Singh",
+        "company_name": "Elite Properties",
+        "raw_message": "2BHK Budget Apartment - Indiranagar",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 1100,
+        "bedroom_count": 2,
+        "price": 12000000,
+        "price_text": "1.2 Cr",
+        "location": "Indiranagar",
+        "project_name": null,
+        "furnishing_status": "unfurnished",
+        "parking_count": 1,
+        "parking_text": null,
+        "facing_direction": "north",
+        "special_features": [],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-25T13:45:00.000000+00:00",
+        "sender_name": "Priya Singh"
+      },
+      {
+        "id": "prop-7",
+        "source_message_id": null,
+        "message_date": "2025-11-15T15:20:00+00:00",
+        "agent_contact": "+91-8765432100",
+        "agent_name": "Anita Sharma",
+        "company_name": null,
+        "raw_message": "1BHK Studio Apartment - Central Indiranagar",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 650,
+        "bedroom_count": 1,
+        "price": 7500000,
+        "price_text": "75 Lakh",
+        "location": "Indiranagar",
+        "project_name": null,
+        "furnishing_status": "furnished",
+        "parking_count": 0,
+        "parking_text": null,
+        "facing_direction": "south",
+        "special_features": [],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-22T08:15:00.000000+00:00",
+        "sender_name": "Anita Sharma"
+      },
+      {
+        "id": "prop-8",
+        "source_message_id": null,
+        "message_date": "2025-11-12T10:45:00+00:00",
+        "agent_contact": "+91-7654321098",
+        "agent_name": "Rohan Gupta",
+        "company_name": "Prime Realty",
+        "raw_message": "2BHK Mid-Range Apartment - Indiranagar",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 1350,
+        "bedroom_count": 2,
+        "price": 16000000,
+        "price_text": "1.6 Cr",
+        "location": "Indiranagar",
+        "project_name": null,
+        "furnishing_status": "semi_furnished",
+        "parking_count": 1,
+        "parking_text": null,
+        "facing_direction": "east",
+        "special_features": [
+          "gym",
+          "pool"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-20T12:30:00.000000+00:00",
+        "sender_name": "Rohan Gupta"
+      },
+      {
+        "id": "prop-9",
+        "source_message_id": null,
+        "message_date": "2025-11-10T16:00:00+00:00",
+        "agent_contact": "+91-6543210987",
+        "agent_name": "Deepak Verma",
+        "company_name": null,
+        "raw_message": "4BHK Villa - Premium Indiranagar",
+        "message_type": "supply_sale",
+        "property_type": "villa",
+        "area_sqft": 4200,
+        "bedroom_count": 4,
+        "price": 85000000,
+        "price_text": "8.5 Cr",
+        "location": "Indiranagar",
+        "project_name": "Green Villa Estate",
+        "furnishing_status": "unfurnished",
+        "parking_count": 3,
+        "parking_text": null,
+        "facing_direction": "north",
+        "special_features": [
+          "villa",
+          "garden",
+          "pool"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-18T09:20:00.000000+00:00",
+        "sender_name": "Deepak Verma"
+      },
+      {
+        "id": "prop-10",
+        "source_message_id": null,
+        "message_date": "2025-11-08T12:15:00+00:00",
+        "agent_contact": "+91-5432109876",
+        "agent_name": "Kavya Desai",
+        "company_name": "Luxury Properties",
+        "raw_message": "Ultra-Premium 5BHK Villa - Indiranagar",
+        "message_type": "supply_sale",
+        "property_type": "villa",
+        "area_sqft": 5500,
+        "bedroom_count": 5,
+        "price": 120000000,
+        "price_text": "12 Cr",
+        "location": "Indiranagar",
+        "project_name": null,
+        "furnishing_status": "unfurnished",
+        "parking_count": 4,
+        "parking_text": null,
+        "facing_direction": "west",
+        "special_features": [
+          "villa",
+          "garden",
+          "pool",
+          "home_theater"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-15T14:00:00.000000+00:00",
+        "sender_name": "Kavya Desai"
+      }
+    ],
+    "nearby_localities": [
+      {
+        "name": "Domlur",
+        "distance_km": 1.5
+      },
+      {
+        "name": "HAL 2nd Stage",
+        "distance_km": 2
+      },
+      {
+        "name": "CV Raman Nagar",
+        "distance_km": 3.5
+      }
+    ],
+    "created_at": "2025-12-14T07:30:43.774113"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-4789-0abc-def123456789",
+    "query": "2BHK apartment in koramangala, budget 1 crore, area around 1000 sq.ft, semi-furnished",
+    "extracted_criteria": {
+      "property": {
+        "bhk": 2,
+        "budget_min": null,
+        "budget_max": 3,
+        "area_sqft_min": 1200,
+        "area_sqft_max": 1800,
+        "property_type": "apartment",
+        "property_age": "new",
+        "location": "Koramangala",
+        "req_type": "demand_buy",
+        "locations": [
+          "Koramangala",
+          "Indiranagar"
+        ],
+        "plot_size_min": null,
+        "plot_size_max": null,
+        "built_up_area_min": 1200,
+        "built_up_area_max": 1800,
+        "property_status": "ready_to_move",
+        "furnishing_status": "semi_furnished",
+        "special_features": [
+          "lift",
+          "parking"
+        ]
+      },
+      "proximity": {
+        "near_school": true,
+        "near_airport": false,
+        "near_hospital": true,
+        "near_shopping_mall": true
+      },
+      "user_journey": {
+        "possession_timeline": "immediate",
+        "time_in_market": "3 months",
+        "agents_contacted": 5,
+        "work_locations": [
+          "Koramangala",
+          "Whitefield"
+        ]
+      }
+    },
+    "missing_criteria": [
+      "property_age_confirmation"
+    ],
+    "matched_properties": [
+      {
+        "id": "kor-1",
+        "source_message_id": null,
+        "message_date": "2025-12-05T10:00:00+00:00",
+        "agent_contact": "+91-9876543211",
+        "agent_name": "Meera Patel",
+        "company_name": "Urban Homes",
+        "raw_message": "2BHK Apartment - Koramangala 5th Block",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 1450,
+        "bedroom_count": 2,
+        "price": 28000000,
+        "price_text": "2.8 Cr",
+        "location": "Koramangala",
+        "project_name": null,
+        "furnishing_status": "semi_furnished",
+        "parking_count": 1,
+        "parking_text": null,
+        "facing_direction": "east",
+        "special_features": [
+          "lift",
+          "gym"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-12-06T11:00:00.000000+00:00",
+        "sender_name": "Meera Patel"
+      },
+      {
+        "id": "kor-2",
+        "source_message_id": null,
+        "message_date": "2025-12-03T14:30:00+00:00",
+        "agent_contact": "+91-8765432101",
+        "agent_name": "Arjun Singh",
+        "company_name": null,
+        "raw_message": "2BHK Luxury Apartment - Koramangala",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 1700,
+        "bedroom_count": 2,
+        "price": 32000000,
+        "price_text": "3.2 Cr",
+        "location": "Koramangala",
+        "project_name": "Prestige Towers",
+        "furnishing_status": "semi_furnished",
+        "parking_count": 2,
+        "parking_text": null,
+        "facing_direction": "north",
+        "special_features": [
+          "pool",
+          "gym",
+          "lift"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-12-04T15:45:00.000000+00:00",
+        "sender_name": "Arjun Singh"
+      },
+      {
+        "id": "kor-3",
+        "source_message_id": null,
+        "message_date": "2025-11-30T09:15:00+00:00",
+        "agent_contact": "+91-7654321099",
+        "agent_name": "Sneha Desai",
+        "company_name": "Koramangala Realty",
+        "raw_message": "2BHK Budget Apartment - Koramangala",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 1200,
+        "bedroom_count": 2,
+        "price": 18000000,
+        "price_text": "1.8 Cr",
+        "location": "Koramangala",
+        "project_name": null,
+        "furnishing_status": "unfurnished",
+        "parking_count": 1,
+        "parking_text": null,
+        "facing_direction": "south",
+        "special_features": [],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-12-01T10:30:00.000000+00:00",
+        "sender_name": "Sneha Desai"
+      },
+      {
+        "id": "kor-4",
+        "source_message_id": null,
+        "message_date": "2025-11-28T13:00:00+00:00",
+        "agent_contact": "+91-6543210988",
+        "agent_name": "Vikram Chandra",
+        "company_name": null,
+        "raw_message": "2BHK Ultra-Luxury - Koramangala Premium",
+        "message_type": "supply_sale",
+        "property_type": "apartment",
+        "area_sqft": 1800,
+        "bedroom_count": 2,
+        "price": 42000000,
+        "price_text": "4.2 Cr",
+        "location": "Koramangala",
+        "project_name": "Elite Towers",
+        "furnishing_status": "fully_furnished",
+        "parking_count": 2,
+        "parking_text": null,
+        "facing_direction": "west",
+        "special_features": [
+          "pool",
+          "gym",
+          "concierge"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-29T14:20:00.000000+00:00",
+        "sender_name": "Vikram Chandra"
+      }
+    ],
+    "nearby_localities": [
+      {
+        "name": "Indiranagar",
+        "distance_km": 4
+      },
+      {
+        "name": "Ulsoor",
+        "distance_km": 2.5
+      },
+      {
+        "name": "Ashok Nagar",
+        "distance_km": 3
+      }
+    ],
+    "created_at": "2025-12-13T10:15:22.123456"
+  },
+  {
+    "id": "b2c3d4e5-f6a7-489b-cdef-123456789abc",
+    "query": "Independent villa in whitefield, budget 8-12 crores, area 3000-4500 sq.ft, new construction, urgent",
+    "extracted_criteria": {
+      "property": {
+        "bhk": 4,
+        "budget_min": 8,
+        "budget_max": 12,
+        "area_sqft_min": 3000,
+        "area_sqft_max": 4500,
+        "property_type": "villa",
+        "property_age": "new",
+        "location": "Whitefield",
+        "req_type": "demand_buy",
+        "locations": [
+          "Whitefield",
+          "Sarjapur Road"
+        ],
+        "plot_size_min": 3000,
+        "plot_size_max": 5000,
+        "built_up_area_min": 3000,
+        "built_up_area_max": 4500,
+        "property_status": "under_construction",
+        "furnishing_status": "unfurnished",
+        "special_features": [
+          "gated_community",
+          "pool",
+          "gym"
+        ]
+      },
+      "proximity": {
+        "near_school": true,
+        "near_airport": true,
+        "near_hospital": true,
+        "near_shopping_mall": true
+      },
+      "user_journey": {
+        "possession_timeline": "12 months",
+        "time_in_market": "6 months",
+        "agents_contacted": 8,
+        "work_locations": [
+          "Whitefield",
+          "HAL Airport"
+        ]
+      }
+    },
+    "missing_criteria": [],
+    "matched_properties": [
+      {
+        "id": "wf-1",
+        "source_message_id": null,
+        "message_date": "2025-12-02T11:00:00+00:00",
+        "agent_contact": "+91-9876543212",
+        "agent_name": "Rajesh Kumar",
+        "company_name": "Whitefield Villas",
+        "raw_message": "4BHK Villa - Whitefield Gated Community",
+        "message_type": "supply_sale",
+        "property_type": "villa",
+        "area_sqft": 3200,
+        "bedroom_count": 4,
+        "price": 95000000,
+        "price_text": "9.5 Cr",
+        "location": "Whitefield",
+        "project_name": "Smart Villas",
+        "furnishing_status": "unfurnished",
+        "parking_count": 2,
+        "parking_text": null,
+        "facing_direction": "north",
+        "special_features": [
+          "villa",
+          "pool",
+          "gym",
+          "gated"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-12-03T12:15:00.000000+00:00",
+        "sender_name": "Rajesh Kumar"
+      },
+      {
+        "id": "wf-2",
+        "source_message_id": null,
+        "message_date": "2025-11-29T15:30:00+00:00",
+        "agent_contact": "+91-8765432102",
+        "agent_name": "Priya Sharma",
+        "company_name": "Premium Realty",
+        "raw_message": "4BHK Independent Villa - Whitefield",
+        "message_type": "supply_sale",
+        "property_type": "villa",
+        "area_sqft": 3800,
+        "bedroom_count": 4,
+        "price": 110000000,
+        "price_text": "11 Cr",
+        "location": "Whitefield",
+        "project_name": null,
+        "furnishing_status": "unfurnished",
+        "parking_count": 3,
+        "parking_text": null,
+        "facing_direction": "east",
+        "special_features": [
+          "villa",
+          "garden"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-30T16:45:00.000000+00:00",
+        "sender_name": "Priya Sharma"
+      },
+      {
+        "id": "wf-3",
+        "source_message_id": null,
+        "message_date": "2025-11-25T10:20:00+00:00",
+        "agent_contact": "+91-7654321090",
+        "agent_name": "Arun Malhotra",
+        "company_name": "Villa Paradise",
+        "raw_message": "4BHK Luxury Villa - Whitefield Premium",
+        "message_type": "supply_sale",
+        "property_type": "villa",
+        "area_sqft": 4200,
+        "bedroom_count": 4,
+        "price": 125000000,
+        "price_text": "12.5 Cr",
+        "location": "Whitefield",
+        "project_name": "Premium Estates",
+        "furnishing_status": "unfurnished",
+        "parking_count": 3,
+        "parking_text": null,
+        "facing_direction": "west",
+        "special_features": [
+          "villa",
+          "pool",
+          "gym",
+          "theater"
+        ],
+        "llm_json": {
+          "split_index": null,
+          "message_type": "supply_sale",
+          "split_from_original": false
+        },
+        "created_at": "2025-11-26T11:30:00.000000+00:00",
+        "sender_name": "Arun Malhotra"
+      }
+    ],
+    "nearby_localities": [
+      {
+        "name": "Sarjapur",
+        "distance_km": 3
+      },
+      {
+        "name": "Marathahalli",
+        "distance_km": 5
+      },
+      {
+        "name": "Bellandur",
+        "distance_km": 6.5
+      }
+    ],
+    "created_at": "2025-12-12T14:45:30.456789"
+  }
+]

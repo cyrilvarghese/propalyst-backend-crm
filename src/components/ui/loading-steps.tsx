@@ -15,9 +15,9 @@ type LoadingStepsProps = {
     steps: LoadingStep[]
 }
 
-export default function     LoadingSteps({ steps }: LoadingStepsProps) {
+export default function LoadingSteps({ steps }: LoadingStepsProps) {
     return (
-        <div className="flex flex-col items-start pl-4 p-6 space-y-3 gap-2">
+        <div className="flex flex-col w-[400px] mx-auto items-start pl-4 p-6 space-y-3 gap-2">
             <AnimatePresence mode="popLayout">
                 {steps.map((step) => (
                     <motion.div

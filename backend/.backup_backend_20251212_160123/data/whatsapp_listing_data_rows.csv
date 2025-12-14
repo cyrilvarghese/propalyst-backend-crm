@@ -1,0 +1,91 @@
+id,source_raw_message_id,message_date,agent_contact,agent_name,company_name,raw_message,message_type,property_type,area_sqft,price,price_text,location,project_name,furnishing_status,parking_count,parking_text,facing_direction,special_features,llm_json,created_at,bedroom_count
+00520b93-68ff-4929-b3eb-a67316523e7a,52ebbaf2-cd59-43dd-80c0-18bf136b9514,2025-08-31 11:26:45+00,7026070800/ 9916251225,Tashi Properties,,"Commercial Property for Rent - Hennur Main Road  
+
+Walkable distance from Sparsh Hospital & on main road
+Ground floor with 4900 Sq.Ft. & 4 car parking
+Rent 5.00 Lakhs 
+Ideal location for showrooms, restaurants, food court etc 
+6 - 8 month’s Rent as advance
+
+DM Tashi Properties
+7026070800/ 9916251225",supply_rent,office,4900,500000,5.00 Lakhs,Hennur Main Road,,,,,,"[""ground_floor"",""4_car_parking"",""main_road_facing"",""advance_rent""]","{""split_index"": null, ""message_type"": ""supply_rent"", ""split_from_original"": false}",2025-11-28 05:34:16.71295+00,
+005e62ba-d709-4624-b3ec-ce16014afc2f,22bc9608-e998-49f0-ac59-8cddb6ea462d,2025-10-17 15:33:32+00,+91 9686115795,TREND SHELTERS Shamran,,"*🪧Diwali Dhamaka 💥💥Flat For Sale!!!!*
+An Investment *So Right*,
+You Simply *Can’t Go Wrong*💰
+
+🏡 Name Of The Project: Prestige Montecarlo
+📍 Location: Yelahanka
+📏 Super Built-up Area: 1,610 Sq ft 
+🪟Bedrooms:   3 BHK With 2 Balconies Facing Garden
+🪚 Furnished: Semi Furnished
+💰 Price Quoted : ~₹ 1.45~ Cr.
+💰 Offer Price : ₹ 1.28 Cr.
+📶 Availability Status: immediate
+
+📞 Contact: TREND SHELTERS Shamran @ +91 9686115795 for more details.",supply_sale,apartment,1610,12800000,₹ 1.28 Cr.,Yelahanka,Prestige Montecarlo,semi_furnished,,,,"[""garden_facing"",""negotiable""]","{""split_index"": null, ""message_type"": ""supply_sale"", ""split_from_original"": false}",2025-11-27 18:14:52.032792+00,
+00672dd8-cb2c-4680-8942-2795d564a04b,c72eca07-ce65-4e7b-97c5-78ae97c44338,2025-09-24 16:01:32+00,9844034034,Santosh Bhurani,,"*In Koramangala*
+Independent House 
+4 Bedrooms preferred 
+On Rent
+Upto Rs 4 Lakh pm
+
+Santosh Bhurani 
+9844034034",demand_rent,independent_house,,400000,Upto Rs 4 Lakh pm,Koramangala,,,,,,[],"{""split_index"": null, ""message_type"": ""demand_rent"", ""split_from_original"": false}",2025-11-28 05:20:47.304313+00,4
+007f7a34-4cc3-46ac-9126-dca7998a02e7,fbf5ceec-4a47-4c30-9f5a-74d781172436,2025-10-19 13:41:57+00,"+91 89044 25490, +91 81472 29590","Likith, Archana",,"One Expat tenant is in need of a 4bhk flat in following properties
+Prestige White meadows
+
+Please reach us on 
+Likith +91 89044 25490
+Archana +91 81472 29590
+https://octopusestates.com/",demand_rent,apartment,,,,,Prestige White meadows,,,,,[],"{""split_index"": 5, ""message_type"": ""demand_rent"", ""split_from_original"": true}",2025-11-27 18:18:47.149484+00,
+00867b91-1aa6-4d0a-9053-fa63f6db0f8f,13de6444-3a75-4408-a445-5d3cc34e3243,2017-11-22 16:47:13+00,,,,A 6000 sft office space is for Sale on the 2nd floor in Commercial Street for Rs. 4.25 crs nego. Has access from both Commercial Street & Dispensary road.,supply_sale,office,6000,42500000,4.25 crs nego,Commercial Street,,,,,,"[""negotiable""]","{""split_index"": null, ""message_type"": ""supply_sale"", ""split_from_original"": false}",2025-11-28 06:35:20.360338+00,
+008980cc-5850-4338-9f63-714a8a34e363,705a4c16-5bce-4b27-b113-e372333d93a8,2025-09-18 18:52:33+00,8550079380,Pallavi M V,,"Dear Associates,
+
+Properties to offer 
+
+📍A Khata site for immediate *Sale* - Kogilu -30x40' - west - ₹6500/sqft
+
+Direct enquiries 
+
+Pallavi M V 
+📞8550079380
+Vibhinna realty",supply_sale,plot,1200,7800000,₹6500/sqft,Kogilu,,,,,west,"[""khata_a""]","{""split_index"": 4, ""message_type"": ""supply_sale"", ""split_from_original"": true}",2025-11-28 04:09:07.392161+00,
+0095d96d-3923-4631-bade-02aa84d1fcee,1f6ed492-2059-4522-85cf-914f97743539,2025-09-15 10:25:47+00,+91-7847 83 83 83,ZEESHAN.G,,"Plots available for Sale in Bangalore : 
+
+🍃 OMBR LYT. :
+*Area :* 6,125 Sft., Corner, East Facing. 
+*PRICE : Rs. 30,000/- Per Sft.
+
+_Kindly revert ONLY WITH DIRECT ENQUIRIES._
+
+_THANKS & REGARDS,_
+*ZEESHAN.G*
+*_DZire Realtors_*
+📱: *+91-7847 83 83 83*",supply_sale,plot,6125,183750000,"Rs. 30,000/- Per Sft.",OMBR Layout,,,,,east,"[""corner_plot""]","{""split_index"": 7, ""message_type"": ""supply_sale"", ""split_from_original"": true}",2025-11-28 09:23:04.231297+00,
+00968aa1-d9f1-4f43-9652-495f8d1895f0,cbe3ce33-457f-4288-bbd3-e6da31dcc006,2025-11-30 15:04:00+00,,,,"Society Name: *SJR Primecorp Vogue* 
+
+Location - ITPL nearby metro station 
+
+Flat Type: 3bhk
+
+3 bathrooms 
+
+3 balcony 
+
+Rent 85k plus maintenance 
+
+Deposit: 5 months rent 
+
+Fully furnished 
+
+1900 sq ft 
+
+East facing 
+
+Floor no  - 5
+
+*Indirect*
+
+Available immediate 
+
+- Location: https://maps.app.goo.gl/i5KqeEnwN71zZzCb7",supply_rent,apartment,1900,85000,85k plus maintenance,ITPL,SJR Primecorp Vogue,fully_furnished,,,east,"[""metro_nearby"",""available_immediate""]","{""split_index"": null, ""message_type"": ""supply_rent"", ""split_from_original"": false}",2025-11-30 11:27:57.12624+00,3

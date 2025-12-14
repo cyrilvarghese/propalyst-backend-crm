@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "WebFetch(domain:ui.shadcn.com)",
+      "WebFetch(domain:localhost)"
+    ]
+  }
+}

@@ -45,3 +45,7 @@ root_agent = Agent(
         AgentTool(agent=web_research_agent)
     ]
 )
+
+from google.adk.apps.app import App
+
+app = App(root_agent=root_agent, name="my_agent")

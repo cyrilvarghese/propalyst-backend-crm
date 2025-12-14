@@ -9,10 +9,11 @@ Always use **shadcn UI components only**. Before creating any new component:
 - Leverage Radix primitives for accessibility and consistency
 
 ### 2. Animation Explanations
-Always **explain Framer Motion code** when used:
+Always **explain Framer Motion code** when used. Reference [Motion.dev Docs](https://motion.dev/docs):
 - Add comments describing motion behavior
 - Document animation timings and easing
 - Explain gesture interactions
+- Use motion.dev as the primary learning resource for animation concepts
 
 ### 3. Project Adherence
 Build strictly according to the [Real Estate CRM - Product Specification.md](./Real%20Estate%20CRM%20-%20Product%20Specification.md)
