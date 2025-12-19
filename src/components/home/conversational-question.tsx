@@ -48,7 +48,7 @@ export default function ConversationalQuestionComponent({
   }
 
   const isAnswered =
-    answer !== null || (question.controlType === "multi-select" && selectedOptions.length > 0) || question.controlType === "community-selection" || question.controlType === "location-proximity"
+    answer !== null || (question.controlType === "multi-select" && selectedOptions.length > 0) || question.controlType === "community-selection" || question.controlType === "location-proximity" || (question.controlType === "tags" && Array.isArray(answer) && answer.length > 0)
 
   return (
     <motion.div
@@ -160,6 +160,16 @@ export default function ConversationalQuestionComponent({
               location,
             })
           }}
+        />
+      )}
+
+      {/* Control Type: Tags */}
+      {question.controlType === "tags" && (
+        <TagInput
+          question={question}
+          answer={answer as string[] | null}
+          isLoading={isLoading}
+          onChange={(tags) => setAnswer(tags)}
         />
       )}
 

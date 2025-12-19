@@ -18,5 +18,8 @@ export { HistogramChart } from "./HistogramChart"
 // Location Proximity
 export { LocationProximityControl } from "./LocationProximityControl"
 
+// Tag Input
+export { TagInput } from "./TagInput"
+
 // Community Selection (imported from parent, but can be moved here if needed)
 // export { CommunitySelectionQuestion } from "./CommunitySelection"

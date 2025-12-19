@@ -22,7 +22,7 @@ export function QuestionAnswerBadge({
 
   const classNameMap = {
     header:
-      "border-primary text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 text-primary max-w-xs",
+      "border-primary text-xs font-medium px-3 py-1.5 rounded-full  flex items-center gap-1.5 text-primary ",
     summary:
       "border-primary text-xs font-medium px-3 py-2 rounded-full flex items-center gap-2 text-primary bg-primary/5 hover:bg-primary/10 transition-colors max-w-xs",
   }
@@ -33,7 +33,7 @@ export function QuestionAnswerBadge({
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: index * 0.05 }}
     >
-      <Badge variant="secondary" className={classNameMap[variant]} >
+      <Badge variant="secondary" title={value} className={classNameMap[variant]} >
         {renderQuestionIcon(question.id)}
         <span className="truncate">{value}</span>
       </Badge>

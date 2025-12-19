@@ -174,6 +174,27 @@ export const MOCK_QUESTIONS_3BHK_INDIRANAGAR: ConversationalQuestion[] = [
     },
   },
   {
+    id: "special_requests",
+    question: "Any special preferences?",
+    label: "Special Requests",
+    controlType: "tags",
+    required: false,
+    data: {
+      placeholder: "Type a preference (e.g., north-facing, pet-friendly)",
+      suggestions: [
+        "north-facing",
+        "pet-friendly",
+        "new-property",
+        "old-property",
+        "vastu-compliant",
+        "garden",
+        "parking",
+      ],
+      marketInsights: "North-facing and pet-friendly properties are increasingly in demand",
+    },
+    helpText: "Add any special features or preferences you're looking for",
+  },
+  {
     id: "proximity_location",
     question: "Is there a work location or important place you want to be near?",
     label: "Proximity Preference",

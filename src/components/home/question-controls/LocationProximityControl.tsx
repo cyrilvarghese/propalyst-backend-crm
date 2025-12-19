@@ -1,124 +1,146 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { useJsApiLoader } from "@react-google-maps/api"
-import { MapPin, Search, X } from "lucide-react"
-import { motion, AnimatePresence } from "motion/react"
+import { MapPin, Search } from "lucide-react"
+import { motion } from "motion/react"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import type { QuestionOption } from "@/data/mock-questions"
 
 interface LocationProximityControlProps {
-  onLocationSelect?: (location: { lat: number; lng: number; address: string }) => void
-  placeholder?: string
-}
-
-interface AutocompletePrediction {
-  place_id: string
-  description: string
-  main_text: string
-  secondary_text?: string
+  options: QuestionOption[]
+  mapCenter?: { lat: number; lng: number }
+  radiusKm?: number
+  onLocationSelect?: (locationType: string, location: { lat: number; lng: number; address: string }) => void
+  helpText?: string
 }
 
 export function LocationProximityControl({
+  options,
+  mapCenter = { lat: 12.9716, lng: 77.5946 },
+  radiusKm = 25,
   onLocationSelect,
-  placeholder = "Search location...",
+  helpText,
 }: LocationProximityControlProps) {
+  const [selectedType, setSelectedType] = useState<string | null>(null)
   const [searchAddress, setSearchAddress] = useState("")
-  const [predictions, setPredictions] = useState<AutocompletePrediction[]>([])
-  const [showPredictions, setShowPredictions] = useState(false)
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number; address: string } | null>(null)
-  const autocompleteServiceRef = useRef<any>(null)
-  const placesServiceRef = useRef<any>(null)
-  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [mapLoaded, setMapLoaded] = useState(false)
+  const mapRef = useRef<HTMLDivElement>(null)
+  const mapInstance = useRef<any>(null)
+  const markerRef = useRef<any>(null)
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
-    libraries: ["places"],
-  })
-
+  // Initialize Google Map
   useEffect(() => {
-    if (!isLoaded) return
+    if (typeof window !== "undefined" && mapRef.current && !mapLoaded) {
+      // Check if Google Maps is loaded
+      if (window.google) {
+        initializeMap()
+        setMapLoaded(true)
+      } else {
+        // Try again in a moment
+        setTimeout(() => {
+          if (window.google && mapRef.current) {
+            initializeMap()
+            setMapLoaded(true)
+          }
+        }, 500)
+      }
+    }
+  }, [mapLoaded])
 
-    const google = (window as any).google
-    autocompleteServiceRef.current = new google.maps.places.AutocompleteService()
-    placesServiceRef.current = new google.maps.places.PlacesService(
-      document.createElement("div")
-    )
-  }, [isLoaded])
+  const initializeMap = () => {
+    if (!mapRef.current || !window.google) return
 
-  const handleAddressChange = (value: string) => {
-    setSearchAddress(value)
-    setPredictions([])
-    setShowPredictions(false)
+    mapInstance.current = new window.google.maps.Map(mapRef.current, {
+      center: mapCenter,
+      zoom: 13,
+      mapTypeControl: false,
+      fullscreenControl: false,
+    })
 
-    if (!value.trim()) return
+    // Draw radius circle
+    new window.google.maps.Circle({
+      center: mapCenter,
+      radius: (radiusKm || 25) * 1000, // Convert km to meters
+      map: mapInstance.current,
+      fillColor: "hsl(var(--primary))",
+      fillOpacity: 0.1,
+      strokeColor: "hsl(var(--primary))",
+      strokeOpacity: 0.3,
+      strokeWeight: 2,
+    })
 
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current)
+    // Click to place marker
+    mapInstance.current.addListener("click", (e: any) => {
+      const lat = e.latLng.lat()
+      const lng = e.latLng.lng()
+      placeMarker(lat, lng)
+    })
+  }
+
+  const placeMarker = (lat: number, lng: number) => {
+    if (!mapInstance.current || !window.google) return
+
+    // Remove existing marker
+    if (markerRef.current) {
+      markerRef.current.setMap(null)
     }
 
-    searchTimeoutRef.current = setTimeout(() => {
-      if (!autocompleteServiceRef.current) return
+    // Add new marker
+    markerRef.current = new window.google.maps.Marker({
+      position: { lat, lng },
+      map: mapInstance.current,
+      title: "Selected Location",
+    })
 
-      const google = (window as any).google
-      autocompleteServiceRef.current.getPlacePredictions(
-        {
-          input: value,
-          componentRestrictions: { country: "in" },
-        },
-        (predictions: any, status: any) => {
-          if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
-            const formattedPredictions = predictions.map((p: any) => ({
-              place_id: p.place_id,
-              description: p.description,
-              main_text: p.main_structured_text?.text || p.structured_formatting?.main_text || p.description.split(",")[0],
-              secondary_text: p.structured_formatting?.secondary_text,
-            }))
-            setPredictions(formattedPredictions)
-            setShowPredictions(true)
-          }
-        }
-      )
-    }, 300)
+    setSelectedLocation({
+      lat,
+      lng,
+      address: `${lat.toFixed(4)}, ${lng.toFixed(4)}`, // Default format, can be geocoded
+    })
+
+    if (selectedType && onLocationSelect) {
+      onLocationSelect(selectedType, { lat, lng, address: `${lat.toFixed(4)}, ${lng.toFixed(4)}` })
+    }
   }
 
-  const handleSelectPrediction = (prediction: AutocompletePrediction) => {
-    if (!placesServiceRef.current) return
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!searchAddress.trim() || !selectedType || !window.google) return
 
-    const google = (window as any).google
-    placesServiceRef.current.getDetails(
-      {
-        placeId: prediction.place_id,
-        fields: ["geometry", "formatted_address"],
-      },
-      (place: any, status: any) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && place) {
-          const lat = place.geometry.location.lat()
-          const lng = place.geometry.location.lng()
-          const address = place.formatted_address || prediction.description
+    try {
+      const geocoder = new window.google.maps.Geocoder()
+      const results = await geocoder.geocode({ address: searchAddress })
 
-          setSearchAddress(address)
-          setSelectedLocation({ lat, lng, address })
-          setPredictions([])
-          setShowPredictions(false)
+      if (results[0]) {
+        const location = results[0].geometry.location
+        const lat = location.lat()
+        const lng = location.lng()
 
-          if (onLocationSelect) {
-            onLocationSelect({
-              lat,
-              lng,
-              address,
-            })
-          }
+        // Pan to location
+        mapInstance.current.panTo({ lat, lng })
+        mapInstance.current.setZoom(15)
+
+        placeMarker(lat, lng)
+
+        setSelectedLocation({
+          lat,
+          lng,
+          address: results[0].formatted_address,
+        })
+
+        if (onLocationSelect) {
+          onLocationSelect(selectedType, {
+            lat,
+            lng,
+            address: results[0].formatted_address,
+          })
         }
       }
-    )
-  }
-
-  if (!isLoaded) {
-    return (
-      <div className="w-full p-3 bg-muted rounded-lg text-sm text-muted-foreground">
-        Loading...
-      </div>
-    )
+    } catch (error) {
+      console.error("Geocoding error:", error)
+    }
   }
 
   return (
@@ -126,84 +148,96 @@ export function LocationProximityControl({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="w-full"
+      className="space-y-4 w-full"
     >
-      <div className="relative">
-        <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
-          <Input
-            type="text"
-            placeholder={placeholder}
-            value={searchAddress}
-            onChange={(e) => handleAddressChange(e.target.value)}
-            onFocus={() => predictions.length > 0 && setShowPredictions(true)}
-            className="pl-10 pr-8"
-            autoComplete="off"
-          />
-          {searchAddress && (
+      {/* Location Type Selection */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-foreground">Select Location Type</label>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          {options.map((option) => (
             <button
-              type="button"
-              onClick={() => {
-                setSearchAddress("")
-                setSelectedLocation(null)
-                setPredictions([])
-                setShowPredictions(false)
-              }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              key={option.value}
+              onClick={() => setSelectedType(option.value)}
+              className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
+                selectedType === option.value
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border bg-background text-muted-foreground hover:border-primary/50"
+              }`}
             >
-              <X className="w-4 h-4" />
-            </button>
-          )}
-        </div>
-
-        <AnimatePresence>
-          {showPredictions && predictions.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.15 }}
-              className="absolute top-full left-0 right-0 mt-1 bg-card border border-border rounded-lg shadow-lg z-50"
-            >
-              <div className="max-h-64 overflow-y-auto">
-                {predictions.map((prediction) => (
-                  <button
-                    key={prediction.place_id}
-                    onClick={() => handleSelectPrediction(prediction)}
-                    className="w-full px-4 py-3 text-left hover:bg-muted transition-colors border-b last:border-b-0 flex items-start gap-3"
-                  >
-                    <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">
-                        {prediction.main_text}
-                      </p>
-                      {prediction.secondary_text && (
-                        <p className="text-xs text-muted-foreground truncate">
-                          {prediction.secondary_text}
-                        </p>
-                      )}
-                    </div>
-                  </button>
-                ))}
+              <div className="flex flex-col items-center gap-1">
+                <span>{option.label}</span>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </button>
+          ))}
+        </div>
       </div>
 
-      {selectedLocation && (
-        <motion.div
-          initial={{ opacity: 0, y: -5 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-3 p-3 rounded-lg bg-primary/5 border border-primary/20 flex items-start gap-2"
-        >
-          <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-          <div className="flex-1 min-w-0">
-            <p className="text-xs text-foreground truncate">{selectedLocation.address}</p>
-            <p className="text-xs text-muted-foreground">
-              {selectedLocation.lat.toFixed(4)}, {selectedLocation.lng.toFixed(4)}
-            </p>
+      {/* Address Search */}
+      {selectedType && (
+        <form onSubmit={handleSearch} className="flex gap-2">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search address or location..."
+              value={searchAddress}
+              onChange={(e) => setSearchAddress(e.target.value)}
+              className="pl-10"
+            />
           </div>
+          <Button type="submit" variant="default" size="sm">
+            Search
+          </Button>
+        </form>
+      )}
+
+      {/* Map */}
+      {selectedType && (
+        <div className="space-y-2">
+          <div className="text-sm text-muted-foreground">
+            {helpText || "Click on the map or search above to pin your location"}
+          </div>
+          <div
+            ref={mapRef}
+            className="w-full h-64 rounded-lg border border-border shadow-sm"
+            style={{ background: "#e5e7eb" }}
+          />
+        </div>
+      )}
+
+      {/* Selected Location Display */}
+      {selectedLocation && selectedType && (
+        <motion.div
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-3 rounded-lg bg-primary/5 border border-primary/20 space-y-2"
+        >
+          <div className="flex items-start gap-2">
+            <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+            <div className="space-y-1 flex-1">
+              <p className="text-sm font-medium text-foreground">
+                {options.find((o) => o.value === selectedType)?.label}
+              </p>
+              <p className="text-xs text-muted-foreground">{selectedLocation.address}</p>
+              <p className="text-xs text-muted-foreground">
+                ({selectedLocation.lat.toFixed(4)}, {selectedLocation.lng.toFixed(4)})
+              </p>
+            </div>
+          </div>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="w-full text-xs h-7"
+            onClick={() => {
+              setSelectedLocation(null)
+              setSelectedType(null)
+              if (markerRef.current) {
+                markerRef.current.setMap(null)
+              }
+            }}
+          >
+            Clear Selection
+          </Button>
         </motion.div>
       )}
     </motion.div>
