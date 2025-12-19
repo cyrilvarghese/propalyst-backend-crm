@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import LoadingSteps, { LoadingStep } from "../ui/loading-steps";
 import { motion } from "motion/react";
 import { HARDCODED_MISSING_QUESTIONS, getMissingQuestions } from "@/data/question-templates";
@@ -12,10 +13,11 @@ import { QuestionStep } from "./question-step";
 interface SearchInputProps {
     onMissingQuestions?: (questions: QuestionStep[]) => void;
     queryType?: string
-
+    enableNavigation?: boolean
 }
 
-export default function SearchInput({ onMissingQuestions, queryType = "start" }: SearchInputProps) {
+export default function SearchInput({ onMissingQuestions, queryType = "start", enableNavigation = false }: SearchInputProps) {
+    const router = useRouter()
     const [query, setQuery] = useState('');
     const [loadingSteps, setLoadingSteps] = useState<LoadingStep[]>([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -24,10 +26,16 @@ export default function SearchInput({ onMissingQuestions, queryType = "start" }:
         e.preventDefault();
         console.log('Searching for:', query);
 
-        // Identify missing questions and call callback
-        const missingQuestions = getMissingQuestions(HARDCODED_MISSING_QUESTIONS);
-        if (onMissingQuestions) {
-            onMissingQuestions(missingQuestions);
+        if (enableNavigation) {
+            // Navigate to chat page with query param
+            const encodedQuery = encodeURIComponent(query);
+            router.push(`/chat?q=${encodedQuery}`);
+        } else {
+            // Identify missing questions and call callback
+            const missingQuestions = getMissingQuestions(HARDCODED_MISSING_QUESTIONS);
+            if (onMissingQuestions) {
+                onMissingQuestions(missingQuestions);
+            }
         }
     }
 

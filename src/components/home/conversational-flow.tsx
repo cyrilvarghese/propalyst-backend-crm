@@ -3,9 +3,8 @@
 import { useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
 import ConversationalQuestion from "./conversational-question"
+import { ConversationalFlowHeader } from "./ConversationalFlowHeader"
 import { ConversationalQuestion as ConversationalQuestionType } from "@/data/mock-questions"
-import { Button } from "@/components/ui/button"
-import { ChevronUp } from "lucide-react"
 
 interface ConversationalFlowProps {
   questions: ConversationalQuestionType[]
@@ -28,7 +27,7 @@ export default function ConversationalFlow({
 }: ConversationalFlowProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<string, any>>({})
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  // const [isCollapsed, setIsCollapsed] = useState(false)
 
   const currentQuestion = questions[currentIndex]
   const isLastQuestion = currentIndex === questions.length - 1
@@ -52,6 +51,12 @@ export default function ConversationalFlow({
     }
   }
 
+  const handlePreviousQuestion = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1)
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -59,43 +64,19 @@ export default function ConversationalFlow({
       transition={{ duration: 0.3 }}
       className="w-full bg-card border border-border rounded-lg shadow-sm"
     >
-      {/* Header with progress and controls */}
-      <div className="flex items-center justify-between p-4 border-b border-border/50">
-        <div className="flex-1">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-muted-foreground">
-              Question {currentIndex + 1} of {questions.length}
-            </span>
-            <span className="text-sm text-muted-foreground">
-              {isLastQuestion ? "Last question" : ""}
-            </span>
-          </div>
-          {/* Progress bar */}
-          <div className="h-1 bg-muted rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.3 }}
-              className="h-full bg-primary"
-            />
-          </div>
-        </div>
-
-        {/* Close button */}
-        {onClose && (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onClose}
-            className="ml-4"
-          >
-            <ChevronUp className="w-4 h-4" />
-          </Button>
-        )}
-      </div>
+      {/* Header with progress, answers, and controls */}
+      <ConversationalFlowHeader
+        currentIndex={currentIndex}
+        totalQuestions={questions.length}
+        isLastQuestion={isLastQuestion}
+        progress={progress}
+        answers={answers}
+        questions={questions}
+        onBackClick={handlePreviousQuestion}
+      />
 
       {/* Questions Container */}
-      {!isCollapsed && (
+      { (
         <div className="p-6">
           <AnimatePresence mode="wait">
             <motion.div

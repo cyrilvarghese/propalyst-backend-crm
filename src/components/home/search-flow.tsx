@@ -9,6 +9,9 @@ import { QuestionStep as QuestionStepType } from "./question-step"
 
 type FlowState = "search" | "questions" | "loading" | "results"
 
+// Feature flag to enable navigation to chat page
+const ENABLE_SEARCH_NAVIGATION = true
+
 export default function SearchFlow() {
   const [currentFlow, setCurrentFlow] = useState<FlowState>("search")
   const [missingQuestions, setMissingQuestions] = useState<QuestionStepType[]>([])
@@ -44,7 +47,10 @@ export default function SearchFlow() {
       )}
       {/* Search Input */}
 
-      <SearchInput onMissingQuestions={handleMissingQuestions} />
+      <SearchInput
+        onMissingQuestions={handleMissingQuestions}
+        enableNavigation={ENABLE_SEARCH_NAVIGATION}
+      />
 
       {/* Loading Flow */}
       {currentFlow === "loading" && (
