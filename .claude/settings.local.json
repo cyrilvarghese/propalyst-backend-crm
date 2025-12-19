@@ -3,7 +3,10 @@
     "allow": [
       "Bash(mkdir:*)",
       "WebFetch(domain:ui.shadcn.com)",
-      "WebFetch(domain:localhost)"
+      "WebFetch(domain:localhost)",
+      "Bash(npx shadcn-ui@latest add radio:*)",
+      "Bash(npx shadcn@latest add radio:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

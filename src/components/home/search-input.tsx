@@ -11,10 +11,11 @@ import { QuestionStep } from "./question-step";
 
 interface SearchInputProps {
     onMissingQuestions?: (questions: QuestionStep[]) => void;
+    queryType?: string
 
 }
 
-export default function SearchInput({ onMissingQuestions }: SearchInputProps) {
+export default function SearchInput({ onMissingQuestions, queryType = "start" }: SearchInputProps) {
     const [query, setQuery] = useState('');
     const [loadingSteps, setLoadingSteps] = useState<LoadingStep[]>([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -29,7 +30,7 @@ export default function SearchInput({ onMissingQuestions }: SearchInputProps) {
             onMissingQuestions(missingQuestions);
         }
     }
-    // setIsSearching(true);
+
 
 
     return (
@@ -58,7 +59,7 @@ export default function SearchInput({ onMissingQuestions }: SearchInputProps) {
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder=" Tell me about you dream home..."
                         autoFocus
-                        className="text-lg w-[800px] border-primary  pl-4 rounded-full h-12 "
+                        className="text-lg w-[800px] border-[1.5px] border-primary  pl-4 rounded-full h-11 "
                         disabled={isSearching}
                     />
                     <Button
@@ -88,7 +89,7 @@ export default function SearchInput({ onMissingQuestions }: SearchInputProps) {
                 }}
 
                 className="w-full">
-                <div className="flex gap-2 pt-2   max-w-2xl mx-auto items-center justify-start" >
+                {queryType === "start" && <div className="flex gap-2 pt-2   max-w-2xl mx-auto items-center justify-start" >
                     <span className="text-sm text-muted-foreground">Try:</span>
                     <Button
                         variant="link"
@@ -116,7 +117,8 @@ export default function SearchInput({ onMissingQuestions }: SearchInputProps) {
                     >
                         "Commercial space in Kammanahalli for rent"
                     </Button>
-                </div>
+                </div>}
+
             </motion.div>
 
 

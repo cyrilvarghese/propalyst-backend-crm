@@ -37,7 +37,15 @@ export default function QuestionFlow({ questions, onComplete }: QuestionFlowProp
   }
 
   return (
-    <div className="max-w-2xl items-center  mx-auto">
+    <motion.div
+      initial={{
+        height: 0
+      }}
+      animate={{ height: 220 }}
+      transition={{
+        duration: 1
+      }}
+      className="max-w-2xl items-center  mx-auto">
 
 
       <div className="flex flex-col w-full items-center gap-4">
@@ -74,6 +82,6 @@ export default function QuestionFlow({ questions, onComplete }: QuestionFlowProp
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

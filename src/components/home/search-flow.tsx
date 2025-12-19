@@ -32,9 +32,7 @@ export default function SearchFlow() {
 
   return (
     <div className="w-full  space-y-8">
-      {/* Search Input */}
 
-      <SearchInput onMissingQuestions={handleMissingQuestions} />
 
 
       {/* Question Flow */}
@@ -44,6 +42,9 @@ export default function SearchFlow() {
           onComplete={handleQuestionsComplete}
         />
       )}
+      {/* Search Input */}
+
+      <SearchInput onMissingQuestions={handleMissingQuestions} />
 
       {/* Loading Flow */}
       {currentFlow === "loading" && (

@@ -51,15 +51,15 @@ export function LeadsTable({ leads, onRefresh, isRefreshing = false }: LeadsTabl
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      const allLeadIds = new Set(leadsArray.map((l) => l.id));
+      const allLeadIds = new Set(leadsArray.map((l) => l.id).filter(Boolean));
       setSelectedLeads(allLeadIds);
     } else {
       setSelectedLeads(new Set());
     }
   };
 
-  const allLeadsSelected = leadsArray.length > 0 && leadsArray.every((l) => selectedLeads.has(l.id));
-  const someLeadsSelected = leadsArray.some((l) => selectedLeads.has(l.id)) && !allLeadsSelected;
+  const allLeadsSelected = leadsArray.length > 0 && leadsArray.every((l) => l.id && selectedLeads.has(l.id));
+  const someLeadsSelected = leadsArray.some((l) => l.id && selectedLeads.has(l.id)) && !allLeadsSelected;
 
   // Update indeterminate state on checkbox ref
   useEffect(() => {
