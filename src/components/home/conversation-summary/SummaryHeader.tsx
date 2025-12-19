@@ -24,7 +24,7 @@ export function SummaryHeader({ answers }: SummaryHeaderProps) {
             Perfect! We've captured your requirements
           </h2>
           <p className="text-sm text-muted-foreground mt-1">
-            You've answered {answeredCount} questions. Here's a summary of your property search.
+            Here's a summary of your property search.
           </p>
         </div>
       </div>

@@ -7,7 +7,7 @@ import SearchInput from '@/components/home/search-input'
 import ConversationalFlow from '@/components/home/conversational-flow'
 import { ConversationSummary } from '@/components/home/conversation-summary'
 import { getMockQuestions, MOCK_QUESTIONS_3BHK_INDIRANAGAR, MOCK_QUESTIONS_VILLA, ConversationalQuestion } from '@/data/mock-questions'
-import { motion } from 'motion/react'
+import { motion, animate } from 'motion/react'
 
 interface Message {
   id: string
@@ -20,17 +20,20 @@ export default function ChatPage() {
   const searchParams = useSearchParams()
   const query = searchParams.get('q')
   const initialized = useRef(false)
+  const parentContainerRef = useRef<HTMLDivElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
+  const summaryRef = useRef<HTMLDivElement>(null)
 
   const [messages, setMessages] = useState<Message[]>([])
   const [showQuestions, setShowQuestions] = useState(false)
   const [showSummary, setShowSummary] = useState(false)
   const [completedAnswers, setCompletedAnswers] = useState<Record<string, any> | null>(null)
-  const [usedQuestions, setUsedQuestions] = useState<ConversationalQuestion[]>(MOCK_QUESTIONS_3BHK_INDIRANAGAR)
   const [extractedCriteria, setExtractedCriteria] = useState<{
     bhk?: number | undefined
     location?: string | undefined
     property_type?: string | undefined
   }>({})
+  const [usedQuestions, setUsedQuestions] = useState<ConversationalQuestion[]>(MOCK_QUESTIONS_3BHK_INDIRANAGAR)
 
   // Initialize with query from URL params
   useEffect(() => {
@@ -108,14 +111,18 @@ export default function ChatPage() {
     setTimeout(() => {
       // Extract criteria from query (simplified mock)
       let criteria: { bhk?: number; location?: string; property_type?: string } = {}
+      let questions: ConversationalQuestion[] = MOCK_QUESTIONS_3BHK_INDIRANAGAR
 
       if (query.toLowerCase().includes('3bhk') && query.toLowerCase().includes('indiranagar')) {
         criteria = { bhk: 3, location: 'Indiranagar' }
+        questions = MOCK_QUESTIONS_3BHK_INDIRANAGAR
       } else if (query.toLowerCase().includes('villa')) {
         criteria = { property_type: 'villa' }
+        questions = MOCK_QUESTIONS_VILLA
       }
 
       setExtractedCriteria(criteria)
+      setUsedQuestions(questions)
 
       const systemMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -129,15 +136,37 @@ export default function ChatPage() {
     }, 800)
   }
 
+  const handleSummaryAnimationComplete = () => {
+    // Scroll smoothly after fade-in animation completes
+    setTimeout(() => {
+      if (!summaryRef.current || !messagesContainerRef.current) return
+
+      const summaryRect = summaryRef.current.getBoundingClientRect()
+      const containerRect = messagesContainerRef.current.getBoundingClientRect()
+      const relativeTop = summaryRect.top - containerRect.top + messagesContainerRef.current.scrollTop
+      const targetScroll = Math.max(0, relativeTop)
+
+      animate(messagesContainerRef.current.scrollTop, targetScroll, {
+        duration: 1.2,
+        ease: 'easeInOut',
+        onUpdate: (value) => {
+          if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = value
+          }
+        },
+      })
+    }, 100)
+  }
+
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className="flex flex-col parent-container bg-background text-foreground" style={{ height: '100vh' }}>
       {/* Navbar */}
       <Navbar />
 
       {/* Main Conversation Area */}
-      <div className="flex-1 flex flex-col items-center justify-center overflow-hidden pb-32">
+      <div ref={parentContainerRef} className="flex-1 flex flex-col items-center justify-center overflow-hidden overflow-y-auto">
         {/* Messages Container */}
-        <div className="w-full max-w-3xl h-full flex flex-col px-4 py-8 overflow-y-auto">
+        <div ref={messagesContainerRef} className="message-container w-full max-w-3xl h-full flex flex-col px-4 py-8 overflow-y-auto">
           {messages.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center text-center">
               <motion.div
@@ -162,16 +191,14 @@ export default function ChatPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
-                  className={`flex ${
-                    message.type === 'user' ? 'justify-end' : 'justify-start'
-                  }`}
+                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'
+                    }`}
                 >
                   <div
-                    className={`max-w-md px-4 py-3 rounded-lg ${
-                      message.type === 'user'
-                        ? 'bg-primary text-primary-foreground rounded-br-none'
-                        : 'bg-muted text-muted-foreground rounded-bl-none'
-                    }`}
+                    className={`max-w-md px-4 py-3 rounded-lg ${message.type === 'user'
+                      ? 'bg-primary text-primary-foreground rounded-br-none'
+                      : 'bg-muted text-muted-foreground rounded-bl-none'
+                      }`}
                   >
                     <p className="text-sm">{message.content}</p>
                   </div>
@@ -199,10 +226,12 @@ export default function ChatPage() {
           {/* Summary Section */}
           {showSummary && completedAnswers && (
             <motion.div
+              ref={summaryRef}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
-              className="mt-8 w-full"
+              onAnimationComplete={handleSummaryAnimationComplete}
+              className="mt-8 w-full summary-section"
             >
               <ConversationSummary
                 answers={completedAnswers}

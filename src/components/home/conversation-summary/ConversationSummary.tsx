@@ -4,7 +4,7 @@ import { motion } from "motion/react"
 import { ConversationalQuestion } from "@/data/mock-questions"
 import { SummaryHeader } from "./SummaryHeader"
 import { AnswerBadges } from "./AnswerBadges"
-import { ParameterOverlapChart } from "./ParameterOverlapChart"
+// import { ParameterOverlapChart } from "./ParameterOverlapChart"
 import { SelectedCommunities } from "./SelectedCommunities"
 import { SimpleInsights } from "./SimpleInsights"
 
@@ -35,7 +35,7 @@ export function ConversationSummary({
       <AnswerBadges answers={answers} questions={questions} />
 
       {/* Parameter Overlap Chart */}
-      <ParameterOverlapChart answers={answers} />
+      {/* <ParameterOverlapChart answers={answers} /> */}
 
       {/* Selected Communities */}
       <SelectedCommunities answers={answers} />
