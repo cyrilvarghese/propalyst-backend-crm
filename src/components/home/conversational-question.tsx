@@ -15,6 +15,8 @@ import {
   MultiSelect,
   SliderControl,
   RangeSlider,
+  LocationProximityControl,
+  TagInput,
 } from "./question-controls"
 
 interface ConversationalQuestionProps {
@@ -46,7 +48,7 @@ export default function ConversationalQuestionComponent({
   }
 
   const isAnswered =
-    answer !== null || (question.controlType === "multi-select" && selectedOptions.length > 0) || question.controlType === "community-selection"
+    answer !== null || (question.controlType === "multi-select" && selectedOptions.length > 0) || question.controlType === "community-selection" || question.controlType === "location-proximity"
 
   return (
     <motion.div
@@ -149,6 +151,17 @@ export default function ConversationalQuestionComponent({
             onChange={(value) => setAnswer(value)}
           />
         )}
+
+      {/* Control Type: Location Proximity */}
+      {question.controlType === "location-proximity" && (
+        <LocationProximityControl
+          onLocationSelect={(location) => {
+            setAnswer({
+              location,
+            })
+          }}
+        />
+      )}
 
       {/* Community Selection */}
       {question.controlType === "community-selection" && question.data?.communities && (

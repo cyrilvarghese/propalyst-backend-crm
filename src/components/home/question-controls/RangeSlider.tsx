@@ -3,10 +3,11 @@
 import { Slider } from "@/components/ui/slider"
 import { ConversationalQuestion } from "@/data/mock-questions"
 import { HistogramChart } from "./HistogramChart"
-
+import { HistogramRecharts } from "./HistogramRecharts"
 interface RangeSliderProps {
   question: ConversationalQuestion
   answer: [number, number] | null
+
   isLoading: boolean
   onChange: (value: [number, number]) => void
 }
@@ -15,6 +16,7 @@ export function RangeSlider({
   question,
   answer,
   isLoading,
+
   onChange,
 }: RangeSliderProps) {
   const {
@@ -25,6 +27,7 @@ export function RangeSlider({
     defaultValue,
     recommendedValue,
     histogram,
+    chartTitle = "",
     marketInsights,
   } = question.data || {}
 
@@ -37,8 +40,8 @@ export function RangeSlider({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Histogram */}
           {histogram && histogram.length > 0 && (
-            <div className="border border-border rounded-lg p-4 bg-card h-fit">
-              <HistogramChart bins={histogram} />
+            <div className="border border-border rounded-lg p-4 shadow-sm bg-card h-fit">
+              <HistogramRecharts bins={histogram} title={chartTitle} />
             </div>
           )}
 

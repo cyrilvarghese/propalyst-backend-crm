@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import { motion } from "motion/react"
+import Link from "next/link"
 
 interface NavbarProps {
   transparent?: boolean
@@ -24,19 +25,20 @@ export default function Navbar({ transparent = false }: NavbarProps) {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`sticky top-0 z-40 w-full border-b transition-all duration-300 ${
-        transparent
+      className={`sticky top-0 z-40 w-full border-b transition-all duration-300 ${transparent
           ? "bg-background/80 backdrop-blur-sm border-transparent"
           : "bg-background border-border/40"
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
-              Propalyst AI
-            </h1>
+            <Link href="/">
+              <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
+                Propalyst AI
+              </h1>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}

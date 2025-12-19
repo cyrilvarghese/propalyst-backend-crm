@@ -39,7 +39,7 @@ export interface Community {
 export interface QuestionData {
   // For histograms/charts
   histogram?: HistogramBin[];
-
+  chartTitle?: string;
   // For select/radio/toggle
   options?: QuestionOption[];
 
@@ -53,6 +53,14 @@ export interface QuestionData {
   defaultValue?: number | [number, number];
   unit?: string;
 
+  // For location proximity (Google Maps)
+  mapCenter?: { lat: number; lng: number };
+  radiusKm?: number;
+
+  // For tag input
+  suggestions?: string[];
+  placeholder?: string;
+
   // Additional insights
   marketInsights?: string;
   recommendedValue?: number | [number, number];
@@ -61,11 +69,12 @@ export interface QuestionData {
 export interface ConversationalQuestion {
   id: string;
   question: string;
-  controlType: "text" | "select" | "multi-select" | "slider" | "range-slider" | "radio" | "toggle-group" | "community-selection";
+  controlType: "text" | "select" | "multi-select" | "slider" | "range-slider" | "radio" | "toggle-group" | "community-selection" | "location-proximity" | "tags";
   data?: QuestionData;
   required: boolean;
   helpText?: string;
   label: string;
+
 }
 
 /**
@@ -91,9 +100,11 @@ export const MOCK_QUESTIONS_3BHK_INDIRANAGAR: ConversationalQuestion[] = [
     id: "budget",
     question: "What's your budget range?",
     label: "Budget Range",
+
     controlType: "range-slider",
     required: true,
     data: {
+      chartTitle: "Price Distribution In Crores",
       min: 0.5,
       max: 5,
       step: 0.1,
@@ -121,6 +132,7 @@ export const MOCK_QUESTIONS_3BHK_INDIRANAGAR: ConversationalQuestion[] = [
     controlType: "toggle-group",
     required: true,
     data: {
+
       options: [
         { value: "apartment", label: "Apartment", count: 298, icon: "Building2" },
         { value: "villa", label: "Villa", count: 18, icon: "Home" },
@@ -160,6 +172,26 @@ export const MOCK_QUESTIONS_3BHK_INDIRANAGAR: ConversationalQuestion[] = [
       ],
       marketInsights: "Semi-furnished properties are most common",
     },
+  },
+  {
+    id: "proximity_location",
+    question: "Is there a work location or important place you want to be near?",
+    label: "Proximity Preference",
+    controlType: "location-proximity",
+    required: false,
+    data: {
+      options: [
+        { value: "my_work", label: "My Work Location", icon: "Briefcase" },
+        { value: "spouse_work", label: "Spouse's Work", icon: "Users" },
+        { value: "school", label: "School/Childcare", icon: "BookOpen" },
+        { value: "parents_home", label: "Parents' Home", icon: "Home" },
+        { value: "hospital", label: "Hospital/Medical", icon: "Heart" },
+      ],
+      mapCenter: { lat: 12.9716, lng: 77.5946 }, // Bangalore center
+      radiusKm: 25,
+      marketInsights: "Proximity to work reduces commute time significantly",
+    },
+    helpText: "Select a location type and pin your location on the map to find nearby properties",
   },
   {
     id: "community_preference",
@@ -521,6 +553,7 @@ export const MOCK_QUESTIONS_VILLA: ConversationalQuestion[] = [
     controlType: "range-slider",
     required: false,
     data: {
+      chartTitle: "Area Sizes in Sq Feet",
       min: 1200,
       max: 10000,
       step: 200,
@@ -536,6 +569,26 @@ export const MOCK_QUESTIONS_VILLA: ConversationalQuestion[] = [
       ],
       marketInsights: "Most villas have plot sizes between 3600-6000 sqft",
     },
+  },
+  {
+    id: "proximity_location_villa",
+    question: "Is there a work location or important place you want to be near?",
+    label: "Proximity Preference",
+    controlType: "location-proximity",
+    required: false,
+    data: {
+      options: [
+        { value: "my_work", label: "My Work Location", icon: "Briefcase" },
+        { value: "spouse_work", label: "Spouse's Work", icon: "Users" },
+        { value: "school", label: "School/Childcare", icon: "BookOpen" },
+        { value: "parents_home", label: "Parents' Home", icon: "Home" },
+        { value: "hospital", label: "Hospital/Medical", icon: "Heart" },
+      ],
+      mapCenter: { lat: 12.9716, lng: 77.5946 }, // Bangalore center
+      radiusKm: 35,
+      marketInsights: "Villas near major IT parks and business districts are in high demand",
+    },
+    helpText: "Select a location type and pin your location on the map to find nearby villas",
   },
   {
     id: "community_preference_villa",

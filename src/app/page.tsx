@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       {/* Navbar */}
-      <Navbar />
+      {/* <Navbar /> */}
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-start p-8 pt-32">
