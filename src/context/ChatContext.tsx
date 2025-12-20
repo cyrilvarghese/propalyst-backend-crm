@@ -53,6 +53,7 @@ export interface ConversationContext {
 
 // Chat state
 export interface ChatState {
+  sessionId: string | null
   messages: ChatMessage[]
   conversationContext: ConversationContext
   isProcessing: boolean
@@ -65,12 +66,14 @@ export type ChatAction =
   | { type: 'UPDATE_MESSAGE'; payload: { id: string; updates: Partial<ChatMessage> } }
   | { type: 'ANSWER_QUESTION'; payload: { questionId: string; answer: any } }
   | { type: 'UPDATE_CONTEXT'; payload: Partial<ConversationContext> }
+  | { type: 'SET_SESSION_ID'; payload: string }
   | { type: 'SET_PROCESSING'; payload: boolean }
   | { type: 'SET_COMPLETE'; payload: boolean }
   | { type: 'RESET' }
 
 // Initial state
 const initialState: ChatState = {
+  sessionId: null,
   messages: [],
   conversationContext: {
     extractedCriteria: {},
@@ -139,6 +142,12 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
         },
       }
 
+    case 'SET_SESSION_ID':
+      return {
+        ...state,
+        sessionId: action.payload,
+      }
+
     case 'SET_PROCESSING':
       return {
         ...state,
@@ -167,6 +176,7 @@ interface ChatContextType {
   updateMessage: (id: string, updates: Partial<ChatMessage>) => void
   answerQuestion: (questionId: string, answer: any) => void
   updateContext: (updates: Partial<ConversationContext>) => void
+  setSessionId: (sessionId: string) => void
   setProcessing: (isProcessing: boolean) => void
   setComplete: (isComplete: boolean) => void
   reset: () => void
@@ -211,6 +221,13 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     })
   }
 
+  const setSessionId = (sessionId: string) => {
+    dispatch({
+      type: 'SET_SESSION_ID',
+      payload: sessionId,
+    })
+  }
+
   const setProcessing = (isProcessing: boolean) => {
     dispatch({
       type: 'SET_PROCESSING',
@@ -238,6 +255,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         updateMessage,
         answerQuestion,
         updateContext,
+        setSessionId,
         setProcessing,
         setComplete,
         reset,

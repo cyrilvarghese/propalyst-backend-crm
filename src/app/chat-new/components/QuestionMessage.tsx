@@ -76,14 +76,7 @@ export function QuestionMessage({
           onAnswer={handleSubmitAnswer}
           isLoading={isAnswered}
         />
-        {/* Hide the Next button when answered using CSS */}
-        {isAnswered && (
-          <style>{`
-            [role="button"] {
-              display: none !important;
-            }
-          `}</style>
-        )}
+
       </div>
     </motion.div>
   )

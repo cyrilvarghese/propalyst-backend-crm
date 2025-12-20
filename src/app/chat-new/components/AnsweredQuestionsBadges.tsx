@@ -18,9 +18,9 @@ export function AnsweredQuestionsBadges({
   }
 
   return (
-    <div className="w-full border-t border-border/40 bg-background/95">
+    <div className="w-full  bg-background/95">
       <div className="flex items-center justify-center w-full">
-        <div className="w-full max-w-3xl px-4 pt-2">
+        <div className="w-full max-w-3xl px-4 pt-3">
           <div className="flex flex-wrap gap-2">
             {messages
               .filter((msg): msg is ChatQuestionMessage => msg.type === 'question')

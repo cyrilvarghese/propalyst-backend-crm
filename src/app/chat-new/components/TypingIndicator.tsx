@@ -37,9 +37,10 @@ export function TypingIndicator({ visible }: TypingIndicatorProps) {
             initial="initial"
             animate="animate"
             transition={{
-              duration: 0.6,
+              duration: 1,
               repeat: Infinity,
-              delay: index * 0.1,
+              delay: index * 0.15,
+              ease: 'linear',
             }}
             className="w-2 h-2 bg-muted-foreground rounded-full"
           />
