@@ -2,7 +2,7 @@
 
 import { ConversationalQuestion } from "@/data/mock-questions"
 import { ReactNode } from "react"
-import { Tag, Wallet, Home, TrendingUp, Sofa, MapPin, BedDouble } from "lucide-react"
+import { Tag, Wallet, Home, TrendingUp, Sofa, MapPin, BedDouble, Hash, Heart } from "lucide-react"
 
 /**
  * Formats answer values for display in badges
@@ -41,6 +41,7 @@ export function formatAnswerValue(value: any, question?: ConversationalQuestion)
  */
 export function renderQuestionIcon(questionId: string): ReactNode {
   const iconClassName = "w-3.5 h-3.5"
+  const locationIconClassName = "w-3.5 h-3.5 absolute"
 
   switch (questionId) {
     case "req_type":
@@ -57,9 +58,11 @@ export function renderQuestionIcon(questionId: string): ReactNode {
       return <Sofa className={iconClassName} />
     case "community_preference":
       return <MapPin className={iconClassName} />
+    case "special_requests":
+      return <Heart className={iconClassName} />
     default:
       if (questionId.includes("proximity_location")) {
-        return <MapPin className={iconClassName} />
+        return <MapPin className={locationIconClassName} />
       }
       return <Tag className={iconClassName} />
   }

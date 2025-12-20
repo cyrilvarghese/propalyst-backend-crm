@@ -592,7 +592,7 @@ export const MOCK_QUESTIONS_VILLA: ConversationalQuestion[] = [
     },
   },
   {
-    id: "proximity_location_villa",
+    id: "proximity_location",
     question: "Is there a work location or important place you want to be near?",
     label: "Proximity Preference",
     controlType: "location-proximity",
@@ -612,7 +612,7 @@ export const MOCK_QUESTIONS_VILLA: ConversationalQuestion[] = [
     helpText: "Select a location type and pin your location on the map to find nearby villas",
   },
   {
-    id: "community_preference_villa",
+    id: "community_preference",
     question: "Here are some villa communities matching your search",
     label: "Community Selection",
     controlType: "community-selection",
@@ -968,7 +968,7 @@ export const MOCK_QUESTIONS_GENERAL: ConversationalQuestion[] = [
     },
   },
   {
-    id: "community_preference_general",
+    id: "community_preference",
     question: "Here are some communities matching your search",
     label: "Community Selection",
     controlType: "community-selection",
@@ -1331,3 +1331,99 @@ export const MOCK_LLM_RESPONSES: Record<string, MockLLMResponse> = {
     totalMatches: 0,
   },
 };
+
+/**
+ * API Response for Listing Results
+ */
+export interface ListingMatch {
+  id: string;
+  name: string;
+  neighborhood: string;
+  price: string;
+  bhk: number;
+  image_url: string;
+  match_percentage: number;
+  highlights: string[];
+}
+
+export interface ListingSearchResponse {
+  hasListing: boolean;
+  matching_listings: ListingMatch[];
+  total_count: number;
+  message: string;
+}
+
+/**
+ * Mock API Responses for different search scenarios
+ */
+export const MOCK_LISTING_RESPONSES: Record<string, ListingSearchResponse> = {
+  "3bhk_indiranagar_buy": {
+    hasListing: true,
+    matching_listings: [
+      {
+        id: "listing_001",
+        name: "Brigade Metropolis - 3BHK",
+        neighborhood: "Indiranagar",
+        price: "₹2.5 Cr",
+        bhk: 3,
+        image_url: "https://images.unsplash.com/photo-1515263487990-61b07816b324?q=80&w=1170&auto=format&fit=crop",
+        match_percentage: 95,
+        highlights: ["Within budget", "Ready to move", "Premium amenities"],
+      },
+      {
+        id: "listing_002",
+        name: "Sobha Indraprastha - 3BHK",
+        neighborhood: "Indiranagar",
+        price: "₹2.2 Cr",
+        bhk: 3,
+        image_url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1170&auto=format&fit=crop",
+        match_percentage: 92,
+        highlights: ["Central location", "Good connectivity", "Pet-friendly"],
+      },
+      {
+        id: "listing_003",
+        name: "Prestige Shantiniketan - 3BHK",
+        neighborhood: "Indiranagar",
+        price: "₹2.8 Cr",
+        bhk: 3,
+        image_url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=735&auto=format&fit=crop",
+        match_percentage: 88,
+        highlights: ["Luxury living", "High-end features", "Green spaces"],
+      },
+    ],
+    total_count: 45,
+    message: "Found 45 properties matching your criteria",
+  },
+  "villa_search": {
+    hasListing: false,
+    matching_listings: [],
+    total_count: 0,
+    message: "Thanks for sharing your villa preferences! We've curated a list and will get back to you within 24 hours with exclusive options.",
+  },
+  "no_listing": {
+    hasListing: false,
+    matching_listings: [],
+    total_count: 0,
+    message: "No listings currently match your criteria. We'll notify you when new properties arrive.",
+  },
+};
+
+/**
+ * Mock function to simulate API call for listings
+ */
+export async function fetchListingMatches(criteria: Record<string, any>): Promise<ListingSearchResponse> {
+  // Simulate network delay
+  await new Promise((resolve) => setTimeout(resolve, 800));
+
+  // Determine which mock response to return based on criteria
+  if (criteria.bhk === 3 && criteria.location?.toLowerCase().includes("indiranagar")) {
+    return MOCK_LISTING_RESPONSES["3bhk_indiranagar_buy"];
+  }
+
+  if (criteria.property_type?.toLowerCase() === "villa") {
+    return MOCK_LISTING_RESPONSES["villa_search"];
+  }
+
+  // Default: return listings response
+  return MOCK_LISTING_RESPONSES["3bhk_indiranagar_buy"];
+}

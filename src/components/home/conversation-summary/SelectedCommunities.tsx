@@ -4,7 +4,7 @@ import { motion } from "motion/react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, TrendingUp } from "lucide-react"
-import { Community, MOCK_QUESTIONS_3BHK_INDIRANAGAR } from "@/data/mock-questions"
+import { Community, MOCK_QUESTIONS_3BHK_INDIRANAGAR, MOCK_QUESTIONS_VILLA, MOCK_QUESTIONS_GENERAL } from "@/data/mock-questions"
 
 interface SelectedCommunitiesProps {
   answers: Record<string, any>
@@ -16,10 +16,15 @@ interface SelectedCommunitiesProps {
 function getAllCommunities(): Community[] {
   const communities: Community[] = []
 
-  MOCK_QUESTIONS_3BHK_INDIRANAGAR.forEach((question) => {
-    if (question.data?.communities) {
-      communities.push(...question.data.communities)
-    }
+  // Collect communities from all question sets
+  const allQuestionSets = [MOCK_QUESTIONS_3BHK_INDIRANAGAR, MOCK_QUESTIONS_VILLA, MOCK_QUESTIONS_GENERAL]
+
+  allQuestionSets.forEach((questionSet) => {
+    questionSet.forEach((question) => {
+      if (question.data?.communities) {
+        communities.push(...question.data.communities)
+      }
+    })
   })
 
   return communities
@@ -58,7 +63,7 @@ export function SelectedCommunities({
     >
       <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
         <MapPin className="w-5 h-5 text-primary" />
-        Selected Communities
+        Type Of Communities You Prefer
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -19,12 +19,12 @@ export function QuestionAnswerBadge({
   variant = "summary",
 }: QuestionAnswerBadgeProps) {
   const value = formatAnswerValue(answer, question)
-
+  const spanClass = question.id === "proximity_location" ? "truncate pl-5" : "truncate"
   const classNameMap = {
     header:
-      "border-primary text-xs font-medium px-3 py-1.5 rounded-full  flex items-center gap-1.5 text-primary ",
+      "border-primary relative text-xs font-medium px-3 py-1.5 rounded-full  flex items-center gap-1.5 text-primary ",
     summary:
-      "border-primary text-xs font-medium px-3 py-2 rounded-full flex items-center gap-2 text-primary bg-primary/5 hover:bg-primary/10 transition-colors max-w-xs",
+      "border-primary relative text-xs font-medium px-3 py-2 rounded-full flex items-center gap-2 text-primary bg-primary/5 hover:bg-primary/10 transition-colors max-w-xs",
   }
 
   return (
@@ -35,7 +35,7 @@ export function QuestionAnswerBadge({
     >
       <Badge variant="secondary" title={value} className={classNameMap[variant]} >
         {renderQuestionIcon(question.id)}
-        <span className="truncate">{value}</span>
+        <span className={spanClass}>{value}</span>
       </Badge>
     </motion.div>
   )

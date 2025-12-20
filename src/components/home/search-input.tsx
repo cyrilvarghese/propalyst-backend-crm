@@ -29,7 +29,7 @@ export default function SearchInput({ onMissingQuestions, queryType = "start", e
         if (enableNavigation) {
             // Navigate to chat page with query param
             const encodedQuery = encodeURIComponent(query);
-            router.push(`/chat?q=${encodedQuery}`);
+            router.push(`/chat-new?q=${encodedQuery}`);
         } else {
             // Identify missing questions and call callback
             const missingQuestions = getMissingQuestions(HARDCODED_MISSING_QUESTIONS);
