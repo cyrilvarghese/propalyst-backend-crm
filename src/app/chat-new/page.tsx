@@ -244,7 +244,7 @@ function ChatNewPageContent() {
       <Navbar />
 
       {/* Main chat area - centered with max width */}
-      <div className="flex-1 flex flex-col pb-24 items-center w-full max-w-3xl mx-auto ">
+      <div className="flex-1 flex flex-col pb-64 items-center w-full max-w-3xl mx-auto ">
         <ChatContainer>
           {/* Empty state - shown while loading first question */}
           {state.messages.length === 0 && !state.isComplete && (

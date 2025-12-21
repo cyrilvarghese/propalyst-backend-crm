@@ -138,7 +138,10 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
             ...action.payload.extractedCriteria,
           },
           askedQuestionIds: action.payload.askedQuestionIds || state.conversationContext.askedQuestionIds,
-          allAnswers: action.payload.allAnswers || state.conversationContext.allAnswers,
+          allAnswers: {
+            ...state.conversationContext.allAnswers,
+            ...action.payload.allAnswers,
+          },
         },
       }
 

@@ -39,6 +39,11 @@ export async function initializeChatSession(
     // Get first question
     const response = await BrokerAgentService.getCurrentQuestion(session_id)
 
+    // Use only processed_answer and processed_question_id from API
+    const initialAnswers = response.processed_question_id && response.processed_answer !== undefined
+      ? { [response.processed_question_id]: response.processed_answer }
+      : {}
+
     return {
       llmResponse: {
         systemMessage: message || response.message,
@@ -48,7 +53,7 @@ export async function initializeChatSession(
       },
       updatedContext: {
         ...context,
-        allAnswers: response.user_summary || {},
+        allAnswers: initialAnswers,
       },
       sessionId: session_id,
     }
@@ -79,6 +84,11 @@ export async function submitQuestionAnswerToAPI(
       type
     )
 
+    // Use only processed_answer and processed_question_id from API
+    const answersToAdd = response.processed_question_id && response.processed_answer !== undefined
+      ? { [response.processed_question_id]: response.processed_answer }
+      : {}
+
     return {
       llmResponse: {
         systemMessage: response.message,
@@ -90,7 +100,7 @@ export async function submitQuestionAnswerToAPI(
         ...context,
         allAnswers: {
           ...context.allAnswers,
-          ...response.user_summary,
+          ...answersToAdd,
         },
       },
     }

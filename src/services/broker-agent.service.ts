@@ -20,6 +20,8 @@ export interface BrokerAgentSession {
   message: string
   completed: boolean
   user_summary: Record<string, any>
+  processed_answer?: any
+  processed_question_id?: string
   messages: string[]
 }
 
