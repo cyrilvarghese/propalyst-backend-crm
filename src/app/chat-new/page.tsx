@@ -102,6 +102,7 @@ function ChatNewPageContent() {
         state.sessionId!,
         questionMessage.question.id,
         answer,
+        "structured",
         state.conversationContext
       )
 
@@ -151,7 +152,7 @@ function ChatNewPageContent() {
     }
   }
 
-  const handleSendMessage = (message: string) => {
+  const handleSendMessage = async (message: string) => {
     if (!message.trim()) return
 
     // Add user message to chat history
@@ -160,8 +161,71 @@ function ChatNewPageContent() {
       content: message,
     })
 
-    // User messages are just stored in chat history for now
-    // (can be enhanced in future to send additional context to API)
+    // Find the current active question to associate this chat message with
+    const currentQuestion = state.messages.find(
+      (msg): msg is ChatQuestionMessage =>
+        msg.type === 'question' && msg.state === 'active'
+    )
+
+    if (!currentQuestion) return
+
+    // Submit chat message to API with the current question ID
+    setProcessing(true)
+    setShowTyping(true)
+
+    try {
+      const { llmResponse, updatedContext } = await submitQuestionAnswerToAPI(
+        state.sessionId!,
+        currentQuestion.question.id,
+        message,
+        "chat",
+        state.conversationContext
+      )
+
+      // Update context with latest answers
+      updateContext(updatedContext)
+
+      // Hide typing
+      setShowTyping(false)
+
+      // Check if conversation is complete
+      if (llmResponse.shouldShowSummary) {
+        setComplete(true)
+        return
+      }
+
+      // Add acknowledgment message (only if present, as it replaces system message)
+      if (llmResponse.acknowledgment) {
+        addMessage({
+          type: 'system',
+          content: llmResponse.acknowledgment,
+        } as any)
+      } else if (llmResponse.systemMessage) {
+        // Add system message only if acknowledgment doesn't exist
+        addMessage({
+          type: 'system',
+          content: llmResponse.systemMessage,
+        } as any)
+      }
+
+      // Add next question
+      if (llmResponse.question) {
+        addMessage({
+          type: 'question',
+          question: llmResponse.question,
+          state: 'active',
+        } as any)
+      }
+    } catch (error) {
+      console.error('Error submitting chat message:', error)
+      addMessage({
+        type: 'system',
+        content: `Sorry, something went wrong: ${error instanceof Error ? error.message : 'Failed to submit message'}. Please try again.`,
+      } as any)
+      setShowTyping(false)
+    } finally {
+      setProcessing(false)
+    }
   }
 
   // Calculate summary data

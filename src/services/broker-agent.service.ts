@@ -30,6 +30,7 @@ export interface CreateSessionResponse {
 
 export interface SubmitAnswerRequest {
   answer: any
+  type: string,
   question_id: string
 }
 
@@ -147,7 +148,8 @@ export class BrokerAgentService {
   static async submitAnswer(
     sessionId: string,
     questionId: string,
-    answer: any
+    answer: any,
+    type: string
   ): Promise<BrokerAgentSession> {
     if (USE_MOCK) {
       // Return mock next question
@@ -186,6 +188,7 @@ export class BrokerAgentService {
           },
           body: JSON.stringify({
             answer,
+            type,
             question_id: questionId,
           } as SubmitAnswerRequest),
         }

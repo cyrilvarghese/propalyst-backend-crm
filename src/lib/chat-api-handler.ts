@@ -67,6 +67,7 @@ export async function submitQuestionAnswerToAPI(
   sessionId: string,
   questionId: string,
   answer: any,
+  type: string,
   context: ConversationContext
 ): Promise<SubmitQuestionAnswerResult> {
   try {
@@ -74,7 +75,8 @@ export async function submitQuestionAnswerToAPI(
     const response = await BrokerAgentService.submitAnswer(
       sessionId,
       questionId,
-      answer
+      answer,
+      type
     )
 
     return {
