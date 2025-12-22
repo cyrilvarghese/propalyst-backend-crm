@@ -49,6 +49,7 @@ export interface ConversationContext {
   }
   askedQuestionIds: string[]
   allAnswers: Record<string, any>
+  userSummary?: Record<string, any>
 }
 
 // Chat state
@@ -142,6 +143,7 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
             ...state.conversationContext.allAnswers,
             ...action.payload.allAnswers,
           },
+          userSummary: action.payload.userSummary !== undefined ? action.payload.userSummary : state.conversationContext.userSummary,
         },
       }
 

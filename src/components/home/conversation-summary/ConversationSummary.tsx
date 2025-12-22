@@ -104,7 +104,7 @@ export function ConversationSummary({
 
           {/* Header with Message */}
           <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-foreground">You'll love these matches →</h2>
+            <h2 className="text-2xl font-bold text-foreground">Lets do a taste check do you like any of these ?</h2>
             <p className="text-sm text-muted-foreground">{listingResponse.message}</p>
           </div>
 

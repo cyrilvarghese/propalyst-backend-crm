@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Navbar from '@/components/navbar/navbar'
 import { ChatProvider, useChat, ChatQuestionMessage } from '@/context/ChatContext'
 import { ChatMessage } from '@/app/chat-new/components/ChatMessage'
@@ -21,10 +22,12 @@ import { motion } from 'motion/react'
  * Main content component that uses the ChatContext
  */
 function ChatNewPageContent() {
+  const searchParams = useSearchParams()
   const { state, addMessage, answerQuestion, updateContext, setSessionId, setProcessing, setComplete } = useChat()
 
   const [showTyping, setShowTyping] = useState(false)
   const initialized_ref = useRef(false)
+  const chatInputRef = useRef<{ focus: () => void }>(null)
 
   // Initialize chat on page load
   useEffect(() => {
@@ -32,21 +35,27 @@ function ChatNewPageContent() {
 
     initialized_ref.current = true
     initializeChat()
-  }, [])
+  }, [searchParams])
 
   const initializeChat = async () => {
+
     setProcessing(true)
     setShowTyping(true)
 
     try {
+      // Get initial query from URL params
+      const initialQuery = searchParams.get('q')
+
       // Create session and get first question
       const { llmResponse, updatedContext, sessionId } = await initializeChatSession(
-        state.conversationContext
+        state.conversationContext,
+        initialQuery || undefined
       )
 
       // Store session ID
       setSessionId(sessionId)
 
+      console.log(":asfs");
       // Update context with answers from API
       updateContext(updatedContext)
 
@@ -54,10 +63,10 @@ function ChatNewPageContent() {
       setShowTyping(false)
 
       // Add system message
-      if (llmResponse.systemMessage) {
+      if (llmResponse.acknowledgment) {
         addMessage({
           type: 'system',
-          content: llmResponse.systemMessage,
+          content: llmResponse.acknowledgment,
         })
       }
 
@@ -149,6 +158,8 @@ function ChatNewPageContent() {
       setShowTyping(false)
     } finally {
       setProcessing(false)
+      // Refocus input after processing
+      chatInputRef.current?.focus()
     }
   }
 
@@ -225,6 +236,8 @@ function ChatNewPageContent() {
       setShowTyping(false)
     } finally {
       setProcessing(false)
+      // Refocus input after processing
+      chatInputRef.current?.focus()
     }
   }
 
@@ -304,14 +317,16 @@ function ChatNewPageContent() {
       {/* Chat input - fixed at bottom */}
       <div className="w-full fixed bottom-0 bg-background/95">
         {/* Answered questions badges - above input */}
-        <AnsweredQuestionsBadges
+        {!state.isComplete && (<AnsweredQuestionsBadges
           messages={state.messages}
           allAnswers={state.conversationContext.allAnswers}
-        />
+          userSummary={state.conversationContext.userSummary}
+        />)}
 
-        {!state.isComplete && (
+        {(
           <div className="flex items-center justify-center w-full">
             <ChatInputArea
+              ref={chatInputRef}
               onSendMessage={handleSendMessage}
               disabled={state.isProcessing}
               placeholder="Add any notes or clarifications (optional)..."

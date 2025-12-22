@@ -13,6 +13,7 @@ export interface LLMResponse {
   acknowledgment?: string
   question?: any
   shouldShowSummary?: boolean
+  additional_text?:string
 }
 
 export interface ProcessUserMessageResult {
@@ -27,17 +28,20 @@ export interface SubmitQuestionAnswerResult {
 }
 
 /**
- * Initialize chat - create session and get first question
+ * Initialize chat - create session and submit initial query
  */
 export async function initializeChatSession(
-  context: ConversationContext
+  context: ConversationContext,
+  initialQuery?: string
 ): Promise<ProcessUserMessageResult> {
   try {
     // Create new session
     const { session_id, message } = await BrokerAgentService.createSession()
 
-    // Get first question
-    const response = await BrokerAgentService.getCurrentQuestion(session_id)
+    // Submit initial query if provided, otherwise get first question
+    const response = initialQuery
+      ? await BrokerAgentService.submitAnswer(session_id, '', initialQuery, 'initial_query')
+      : await BrokerAgentService.getCurrentQuestion(session_id)
 
     // Use only processed_answer and processed_question_id from API
     const initialAnswers = response.processed_question_id && response.processed_answer !== undefined
@@ -54,6 +58,7 @@ export async function initializeChatSession(
       updatedContext: {
         ...context,
         allAnswers: initialAnswers,
+        userSummary: response.user_summary,
       },
       sessionId: session_id,
     }
@@ -102,6 +107,7 @@ export async function submitQuestionAnswerToAPI(
           ...context.allAnswers,
           ...answersToAdd,
         },
+        userSummary: response.user_summary,
       },
     }
   } catch (error) {
