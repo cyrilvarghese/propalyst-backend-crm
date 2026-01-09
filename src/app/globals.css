@@ -148,6 +148,29 @@
     background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary) / 0.8));
   }
 
+  /* Blue to Green Gradient - Used in property modals */
+  .bg-blue-green-gradient {
+    @apply bg-gradient-to-br from-blue-500/10 to-green-500/10 hover:from-blue-500/15 hover:to-green-500/15 transition-colors;
+  }
+
+  .bg-blue-green-gradient-progress {
+    @apply bg-gradient-to-r from-blue-500 to-green-500;
+  }
+
+  /* Ruled paper pattern */
+  .bg-ruled-paper {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 35px,
+        hsl(var(--border) / 0.4) 35px,
+        hsl(var(--border) / 0.4) 36px
+      );
+    background-size: 100% 36px;
+    background-position: 0 0;
+  }
+
   @keyframes shimmer {
     0% {
       background-position: 200% 0;

@@ -18,14 +18,36 @@ export function QuestionAnswerBadge({
   index,
   variant = "summary",
 }: QuestionAnswerBadgeProps) {
-  const value = formatAnswerValue(answer, question)
-  const spanClass = question.id === "proximity_location" ? "truncate pl-5" : "truncate"
   const classNameMap = {
     header:
       "border-primary relative text-xs font-medium px-3 py-1.5 rounded-full  flex items-center gap-1.5 text-primary ",
     summary:
       "border-primary relative text-xs font-medium px-3 py-2 rounded-full flex items-center gap-2 text-primary bg-primary/5 hover:bg-primary/10 transition-colors max-w-xs",
   }
+
+  // Handle special_requests as individual badges
+  if (question.id === "special_requests" && Array.isArray(answer)) {
+    return (
+      <>
+        {answer.map((item, itemIndex) => (
+          <motion.div
+            key={`${question.id}-${itemIndex}`}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: (index + itemIndex) * 0.05 }}
+          >
+            <Badge variant="secondary" title={item} className={classNameMap[variant]}>
+              {renderQuestionIcon(question.id)}
+              <span className="truncate">{item}</span>
+            </Badge>
+          </motion.div>
+        ))}
+      </>
+    )
+  }
+
+  const value = formatAnswerValue(answer, question)
+  const spanClass = question.id === "proximity_location" ? "truncate pl-5" : "truncate"
 
   return (
     <motion.div

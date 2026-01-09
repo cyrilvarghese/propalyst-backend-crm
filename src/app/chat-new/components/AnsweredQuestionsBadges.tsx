@@ -35,14 +35,30 @@ export function AnsweredQuestionsBadges({
     property_area: 'sq ft',
   }
 
-  // Format range values as "min-max unit"
+  // Format range values as "min-max unit" with smart formatting
   const formatRangeValue = (key: string, value: any): any => {
     if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
       const { min, max } = value
+      const unit = RANGE_UNITS[key] || ''
+      const unitStr = unit ? ' ' + unit : ''
+
+      // Both min and max exist
       if (min !== null && min !== undefined && max !== null && max !== undefined) {
-        const unit = RANGE_UNITS[key] || ''
-        const rangeStr = `${min}-${max}${unit ? ' ' + unit : ''}`
-        return rangeStr
+        // If min and max are the same, show only once
+        if (min === max) {
+          return `${min}${unitStr}`
+        }
+        return `${min}-${max}${unitStr}`
+      }
+
+      // Only max exists (min is null/undefined)
+      if (max !== null && max !== undefined && (min === null || min === undefined)) {
+        return `less than ${max}${unitStr}`
+      }
+
+      // Only min exists (max is null/undefined)
+      if (min !== null && min !== undefined && (max === null || max === undefined)) {
+        return `more than ${min}${unitStr}`
       }
     }
     return value
@@ -65,14 +81,46 @@ export function AnsweredQuestionsBadges({
     ([, value]) => isValidValue(value)
   )
 
+  // Flatten special features into individual badges
+  const allBadges: Array<{ key: string; value: any; index: number }> = []
+  let badgeIndex = 0
+
+  badgeEntries.forEach(([key, value]) => {
+    // Special features should be split into individual items
+    if (key === 'special_features' && Array.isArray(value)) {
+      value.forEach((feature) => {
+        allBadges.push({
+          key: `${key}-${feature}`,
+          value: feature,
+          index: badgeIndex++,
+        })
+      })
+    } else if (key === 'special_requests' && Array.isArray(value)) {
+      // Pass special_requests as array to QuestionAnswerBadge for iteration
+      allBadges.push({
+        key,
+        value,
+        index: badgeIndex++,
+      })
+    } else {
+      allBadges.push({
+        key,
+        value,
+        index: badgeIndex++,
+      })
+    }
+  })
+
   return (
     <div className="w-full  bg-background/95">
       <div className="flex items-center justify-center w-full">
         <div className="w-full max-w-3xl px-4 pt-3">
           <div className="flex flex-wrap gap-2">
-            {badgeEntries.map(([key, value], index) => {
+            {allBadges.map(({ key, value, index }) => {
               const formattedValue = formatRangeValue(key, value)
-              const question = questionMap.get(key)
+              const baseKey = key.split('-')[0]
+
+              const question = questionMap.get(baseKey)
 
               // If we have the question in messages, use it
               if (question) {

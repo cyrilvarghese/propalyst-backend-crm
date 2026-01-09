@@ -35,27 +35,13 @@ export function RangeSlider({
 
   return (
     <div className="space-y-4">
-      {/* Histogram and Market Insights - Side by side */}
-      {(histogram || marketInsights) && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Histogram */}
-          {histogram && histogram.length > 0 && (
-            <div className="border border-border rounded-lg p-4 shadow-sm bg-card h-fit">
-              <HistogramRecharts bins={histogram} title={chartTitle} />
-            </div>
-          )}
-
-          {/* Market Insights */}
-          {marketInsights && (
-            <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-sm h-fit">
-              <p className="text-blue-900 dark:text-blue-100">
-                <span className="font-semibold">Market Insight:</span>{" "}
-                {marketInsights}
-              </p>
-            </div>
-          )}
+      {/* Histogram */}
+      {histogram && histogram.length > 0 && (
+        <div className="border border-border rounded-lg p-4 shadow-sm bg-card h-fit">
+          <HistogramRecharts bins={histogram} title={chartTitle} />
         </div>
       )}
+
 
       {/* Range Display and Recommended */}
       <div className="flex items-center justify-between">

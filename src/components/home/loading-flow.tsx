@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import LoadingSteps, { LoadingStep } from "@/components/ui/loading-steps"
-import { getLoadingSteps } from "@/data/question-templates"
 
 interface LoadingFlowProps {
   onComplete: () => void
@@ -18,7 +17,11 @@ export default function LoadingFlow({ onComplete }: LoadingFlowProps) {
   const simulateApiCall = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
   async function startLoadingSteps() {
-    setLoadingSteps(getLoadingSteps())
+    setLoadingSteps([
+      { id: "matches", text: "Loading matches...", status: "loading" },
+      { id: "pricing", text: "Loading pricing...", status: "loading" },
+      { id: "neighborhoods", text: "Loading neighborhoods...", status: "loading" },
+    ])
 
     try {
       // Step 1: Load matches

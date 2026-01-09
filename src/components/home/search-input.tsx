@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import LoadingSteps, { LoadingStep } from "../ui/loading-steps";
 import { motion } from "motion/react";
-import { HARDCODED_MISSING_QUESTIONS, getMissingQuestions } from "@/data/question-templates";
 import { QuestionStep } from "./question-step";
 
 interface SearchInputProps {
@@ -30,12 +29,6 @@ export default function SearchInput({ onMissingQuestions, queryType = "start", e
             // Navigate to chat page with query param
             const encodedQuery = encodeURIComponent(query);
             router.push(`/chat-new?q=${encodedQuery}`);
-        } else {
-            // Identify missing questions and call callback
-            const missingQuestions = getMissingQuestions(HARDCODED_MISSING_QUESTIONS);
-            if (onMissingQuestions) {
-                onMissingQuestions(missingQuestions);
-            }
         }
     }
 

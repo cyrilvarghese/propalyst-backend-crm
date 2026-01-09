@@ -137,6 +137,7 @@ export default function ChatPage() {
   }
 
   const handleSummaryAnimationComplete = () => {
+    console.log("adsdas")
     // Scroll smoothly after fade-in animation completes
     setTimeout(() => {
       if (!summaryRef.current || !messagesContainerRef.current) return
@@ -223,22 +224,6 @@ export default function ChatPage() {
             </motion.div>
           )}
 
-          {/* Summary Section */}
-          {showSummary && completedAnswers && (
-            <motion.div
-              ref={summaryRef}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              onAnimationComplete={handleSummaryAnimationComplete}
-              className="mt-8 w-full summary-section"
-            >
-              <ConversationSummary
-                answers={completedAnswers}
-                questions={usedQuestions}
-              />
-            </motion.div>
-          )}
         </div>
       </div>
 

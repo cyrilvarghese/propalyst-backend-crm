@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { motion } from "motion/react"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, Lightbulb } from "lucide-react"
 import { ConversationalQuestion } from "@/data/mock-questions"
 import CommunitySelectionQuestion from "./community-selection-question"
+import TasteSelectionQuestion from "./taste-selection-question"
 import {
   TextInput,
   RadioGroupControl,
@@ -48,7 +49,7 @@ export default function ConversationalQuestionComponent({
   }
 
   const isAnswered =
-    answer !== null || (question.controlType === "multi-select" && selectedOptions.length > 0) || question.controlType === "community-selection" || question.controlType === "location-proximity" || (question.controlType === "tags" && Array.isArray(answer) && answer.length > 0)
+    answer !== null || (question.controlType === "multi-select" && selectedOptions.length > 0) || question.controlType === "community-selection" || question.controlType === "location-proximity" || question.controlType === "taste-selection" || (question.controlType === "tags" && Array.isArray(answer) && answer.length > 0)
 
   return (
     <motion.div
@@ -57,13 +58,22 @@ export default function ConversationalQuestionComponent({
       transition={{ duration: 0.3 }}
       className="space-y-4"
     >
-      {/* Question Title */}
-      <div className="space-y-2">
-        <Label className="text-base font-semibold text-foreground">{question.question}</Label>
-        {question.helpText && (
-          <p className="text-sm text-muted-foreground">{question.helpText}</p>
-        )}
-      </div>
+      {/* Question Title - Skip for taste-selection as it has its own header */}
+      {question.controlType !== "taste-selection" && (
+        <div className="space-y-2">
+          <Label className="text-base font-semibold text-foreground">{question.question}</Label>
+          {question.data && question.data.marketInsights && (
+            <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="flex gap-3 items-center">
+                <div className="bg-blue-100 dark:bg-blue-900 rounded-full p-2 shrink-0">
+                  <Lightbulb className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <p className="text-sm font-medium text-blue-900 dark:text-blue-100">{question.data.marketInsights}</p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Control Type: Text Input */}
       {question.controlType === "text" && (
@@ -186,8 +196,18 @@ export default function ConversationalQuestionComponent({
         />
       )}
 
-      {/* Submit Button - Only show for non-community-selection types */}
-      {question.controlType !== "community-selection" && (
+      {/* Taste Selection */}
+      {question.controlType === "taste-selection" && question.data?.properties && (
+        <TasteSelectionQuestion
+          question={question.question}
+          properties={question.data.properties}
+          onAnswer={onAnswer}
+          onSkip={() => onAnswer([])}
+        />
+      )}
+
+      {/* Submit Button - Only show for non-community-selection and non-taste-selection types */}
+      {question.controlType !== "community-selection" && question.controlType !== "taste-selection" && (
         <Button
           onClick={handleAnswer}
           disabled={!isAnswered || isLoading}

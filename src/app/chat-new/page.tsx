@@ -15,7 +15,7 @@ import {
   initializeChatSession,
   submitQuestionAnswerToAPI,
 } from '@/lib/chat-api-handler'
-import { motion } from 'motion/react'
+import { motion, animate } from 'motion/react'
 
 /**
  * ChatNewPageContent Component
@@ -28,6 +28,8 @@ function ChatNewPageContent() {
   const [showTyping, setShowTyping] = useState(false)
   const initialized_ref = useRef(false)
   const chatInputRef = useRef<{ focus: () => void }>(null)
+  const summaryRef = useRef<HTMLDivElement>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
 
   // Initialize chat on page load
   useEffect(() => {
@@ -67,6 +69,13 @@ function ChatNewPageContent() {
         addMessage({
           type: 'system',
           content: llmResponse.acknowledgment,
+        })
+      }
+      // Add system message
+      if (llmResponse.additional_text) {
+        addMessage({
+          type: 'system',
+          content: llmResponse.additional_text,
         })
       }
 
@@ -251,14 +260,72 @@ function ChatNewPageContent() {
     }
     : null
 
+  const handleSummaryAnimationComplete = () => {
+    // Scroll smoothly after fade-in animation completes
+    setTimeout(() => {
+      if (!summaryRef.current || !chatContainerRef.current) {
+        return
+      }
+
+      const scrollContainer = chatContainerRef.current
+      const parent = scrollContainer.parentElement
+      const grandparent = parent?.parentElement
+
+      // Attach scroll listeners to identify which element is scrollable
+      const createScrollHandler = (name: string) => {
+        return () => {
+          console.log(`✓ ${name} is scrolling`)
+        }
+      }
+
+      const currentHandler = createScrollHandler('ChatContainer')
+      const parentHandler = parent ? createScrollHandler('Parent') : null
+      const grandparentHandler = grandparent ? createScrollHandler('Grandparent') : null
+
+      scrollContainer.addEventListener('scroll', currentHandler)
+      if (parent && parentHandler) parent.addEventListener('scroll', parentHandler)
+      if (grandparent && grandparentHandler) grandparent.addEventListener('scroll', grandparentHandler)
+
+      // Store for cleanup
+      const handlers = [
+        { el: scrollContainer, handler: currentHandler },
+        ...(parent && parentHandler ? [{ el: parent, handler: parentHandler }] : []),
+        ...(grandparent && grandparentHandler ? [{ el: grandparent, handler: grandparentHandler }] : []),
+      ]
+
+      const summaryRect = summaryRef.current.getBoundingClientRect()
+      const containerRect = scrollContainer.getBoundingClientRect()
+      const currentScroll = scrollContainer.scrollTop
+      const relativeTop = summaryRect.top - containerRect.top + currentScroll
+      const targetScroll = Math.max(0, relativeTop)
+
+      animate(currentScroll, targetScroll, {
+        duration: 1.2,
+        ease: 'easeInOut',
+        onUpdate: (value) => {
+          if (scrollContainer) {
+            scrollContainer.scrollTop = value
+          }
+        },
+      })
+
+      // Cleanup listeners after animation
+      setTimeout(() => {
+        handlers.forEach(({ el, handler }) => {
+          el.removeEventListener('scroll', handler)
+        })
+      }, 1300)
+    }, 100)
+  }
+
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Navbar */}
       <Navbar />
 
       {/* Main chat area - centered with max width */}
-      <div className="flex-1 flex flex-col pb-64 items-center w-full max-w-3xl mx-auto ">
-        <ChatContainer>
+      <div className="flex-1 flex flex-col items-center w-full">
+        <ChatContainer ref={chatContainerRef} disableAutoScroll={state.isComplete}>
           {/* Empty state - shown while loading first question */}
           {state.messages.length === 0 && !state.isComplete && (
             <div className="flex-1 flex flex-col items-center justify-center text-center h-96">
@@ -299,14 +366,15 @@ function ChatNewPageContent() {
           {/* Summary */}
           {state.isComplete && summaryData && (
             <motion.div
+              ref={summaryRef}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
+              onAnimationComplete={handleSummaryAnimationComplete}
               className="mt-8 w-full"
             >
               <ConversationSummary
-                answers={summaryData.answers}
-                questions={summaryData.questions}
+                userSummary={state.conversationContext.userSummary || {}}
               />
             </motion.div>
           )}
